@@ -7,10 +7,108 @@
     <!-- bootstrap link -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+   <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        background-color: #c6c7c8;
+        color: #343a40;
+        margin: 0;
+        padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 3% 0;
+        }
+
+        .choose2 {
+            max-width: 450px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .txt {
+            margin: 10px 0 5px;
+        }
+
+        .iselect2 {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .btn2 {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn2:hover {
+            background-color: #0056b3;
+        }
+
+        /* Bootstrap overrides and adjustments */
+        .choose2 {
+            margin-top: 20px; /* Adjust spacing */
+        }
+
+        @media (max-width: 576px) {
+            .choose2 {
+                max-width: 90%; /* Adjust width for small screens */
+                box-shadow: none; /* Remove box shadow on small screens */
+            }
+        }
+
+   </style>
 </head>
 <body>
     <h1>This is Indoor Navigation App</h1>
-    <a href="/floor-navigate"> Floor Plan </a>
+
+    <div class="choose2">
+        <h2>Choose Your Destination:</h2>
+        <form action="floor-navigate" name="Haus" method='get'>
+
+            <h4 class="txt">Floor:</h4>
+            <select class='iselect2 my-3' name="Floor">
+                <option value="ground">Ground Floor</option>
+                {% for i in '123456' %}
+                    <option value="floor {{ i }}">floor {{ i }}</option>
+                {% endfor %}
+            </select> <br>
+
+            <h4 class="txt">From:</h4>
+            <select class='iselect2 my-3' name="From">
+                {% for i in places %}
+                <option value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+            </select> <br>
+            <h4 class="txt">To:</h4>
+            <select class='iselect2 my-3' name="To">
+                {% for i in places %}
+                <option value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+            </select> <br>
+            <input class='btn2' type="submit" value="Search">
+        </form>
+    </div>
 
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

@@ -11,9 +11,7 @@
 
 </head>
 <body>
-    <div class="btn" style="display: flex; align-items: center; justify-content: center;">
-        <button  onclick="changePath()" type="button" style="font-size: large; font-weight: 700; border-radius: 5px; padding: 8px 20px; background-color: rgb(59, 59, 97); color: white; cursor: pointer;">Next Path</button>
-    </div>
+    
     <svg viewBox="0 0 320 300" width="80%" height="auto" xmlns="http://www.w3.org/2000/svg">
         <rect x="10" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
         <rect x="28.75" y="10.056" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
@@ -30,9 +28,9 @@
         <rect x="197.5" y="10" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
         <rect x="197.5" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
         <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="10" y1="53.999" x2="10" y2="76.001" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="234.999" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="234.999" y="76.001" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 253.979 10 C 326.982 11.89 330.425 119.999 253.749 119.999 L 253.979 10 Z" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="234.999" y="17" width="18.75" height="37" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
+        <rect x="234.999" y="76.001" width="18.75" height="36" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
+        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 253.979 15 C 326.982 11.89 330.425 119.999 253.749 114 L 253.979 15 Z" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
         <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="99.999" y1="21" x2="145" y2="21" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
 
         <!-- starting point -->
@@ -108,46 +106,68 @@
         });
 
     </script> -->
-    <script>
+    <!-- <script>
         // Initialize variables
-        let i = 1;
+        let i = "#{{ destination }}";
+        console.log(i);
     
         // Function to change path
-        function changePath() {
-            // Get the current path element and hide it
-            let currentPath = document.querySelector(`#startToRoom${i}`);
-            currentPath.style.display = 'none';
+        // function changePath() {
+        //     // Get the current path element and hide it
+        //     let currentPath = document.querySelector(`#startToRoom${i}`);
+        //     currentPath.style.display = 'none';
     
-            // Increment the counter
-            i = (i % 15) + 1;
+        //     // Increment the counter
+        //     i = (i % 15) + 1;
     
-            // Get the new path element and display it
-            let newPath = document.querySelector(`#startToRoom${i}`);
-            newPath.style.display = 'inline';
+        //     // Get the new path element and display it
+        //     let newPath = document.querySelector(`#startToRoom${i}`);
+        //     newPath.style.display = 'inline';
     
-            // Get the length of the new path
-            var length = newPath.getTotalLength();
+        //     // Get the length of the new path
+        //     var length = newPath.getTotalLength();
     
-            // Set the stroke-dasharray to the path length and initially hide the stroke
-            newPath.style.strokeDasharray = 2;
-            newPath.style.strokeDashoffset = length;
+        //     // Set the stroke-dasharray to the path length and initially hide the stroke
+        //     newPath.style.strokeDasharray = 2;
+        //     newPath.style.strokeDashoffset = length;
+    
+        //     // Use anime.js to animate the stroke along the path
+        //     anime({
+        //         targets: `#startToRoom${i}`,
+        //         strokeDashoffset: [anime.setDashoffset, 0],
+        //         easing: 'linear',
+        //         duration: 10000,
+        //         loop: true
+        //     });
+        // }
+        // // Display the first path initially
+        let path = document.querySelector(i);
+        path.style.display = 'inline';
+        path.style.strokeDasharray = 2;
+        path.style.strokeDashoffset = 2;
     
             // Use anime.js to animate the stroke along the path
-            anime({
-                targets: `#startToRoom${i}`,
-                strokeDashoffset: [anime.setDashoffset, 0],
-                easing: 'linear',
-                duration: 10000,
-                loop: true
-            });
-        }
+        anime({
+            targets: i,
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'linear',
+            duration: 7000,
+            loop: true
+        });
+
+    </script> -->
+    <script>
+        // Initialize variables
+        let i = "{{ destination }}";
+        console.log(i);
+    
         // Display the first path initially
         let path = document.querySelector(`#startToRoom${i}`);
         path.style.display = 'inline';
         path.style.strokeDasharray = 2;
-        path.style.strokeDashoffset = length;
+        path.style.strokeDashoffset = 2;
     
-            // Use anime.js to animate the stroke along the path
+        // Use anime.js to animate the stroke along the path
         anime({
             targets: `#startToRoom${i}`,
             strokeDashoffset: [anime.setDashoffset, 0],
@@ -155,7 +175,6 @@
             duration: 7000,
             loop: true
         });
-
     </script>
 
 

@@ -15,6 +15,7 @@ def home(request):
 
 def navigate(request):
 
-    room = request.GET.get('To')
+    pfrom = request.GET.get('From')
+    to = request.GET.get('To')
 
-    return render(request , "navigation.html" , {"destination": room})
+    return render(request , "navigation1.html" , {"i": pfrom , "j":to})

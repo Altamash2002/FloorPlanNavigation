@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>college SVG</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5"></script>
+    <style>
+        circle{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="0 0 320 300" width="100%" length="auto" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="28.75" y="10.056" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="66.25" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="10" y="76.001" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="28.75" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="66.25" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="103.75" y1="76.001" x2="141.249" y2="76.001" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="84.999" y="21" width="15" height="32.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="145" y="21" width="15" height="32.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="141.249" y="76.001" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="160" y="10" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="160" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="197.5" y="10" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="197.5" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="10" y1="53.999" x2="10" y2="76.001" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+        <rect x="234.999" y="17" width="18.75" height="37" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
+        <rect x="234.999" y="76.001" width="18.75" height="36" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
+        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 253.979 15 C 326.982 11.89 330.425 119.999 253.749 114 L 253.979 15 Z" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
+        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="99.999" y1="21" x2="145" y2="21" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+
+        <!-- starting point -->
+        <!-- <circle cx="122.5" cy="145" r="4" stroke="black" stroke-width="1" fill="red" /> -->
+
+        <!-- text -->
+        <text x="107.5" y="160" font-family="Arial" font-size="5" fill="black">(Stating Point)</text>
+
+        <!-- Room labels -->
+        <text x="10.75" y="25" font-family="Arial" font-size="5" fill="black">Room 1</text>
+        <text x="35.75" y="25" font-family="Arial" font-size="5" fill="black">Room 2</text>
+        <text x="67" y="25" font-family="Arial" font-size="5" fill="black">Room 3</text>        
+        <text x="85.499" y="36" font-family="Arial" font-size="4" fill="black">Room 4</text>
+        <text x="145.75" y="36" font-family="Arial" font-size="4" fill="black">Room 5</text>
+        <text x="168.5" y="25" font-family="Arial" font-size="5" fill="black">Room 6</text>
+        <text x="205" y="25" font-family="Arial" font-size="5" fill="black">Room 7</text>
+        <text x="235.499" y="25" font-family="Arial" font-size="5" fill="black">Room 8</text>
+        <text x="10.75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 9</text>
+        <text x="35.75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 10</text>
+        <text x="75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 11</text>
+        <text x="225" y="65.999" font-family="Arial" font-size="5" fill="black">Corridor</text>
+        <text x="141.749" y="91.001" font-family="Arial" font-size="4" fill="black">Room 12</text>
+        <text x="170.5" y="91.001" font-family="Arial" font-size="5" fill="black">Room 13</text>
+        <text x="205" y="91.001" font-family="Arial" font-size="5" fill="black">Room 14</text>
+        <text x="13.75" y="65.999" font-family="Arial" font-size="5" fill="black">Corridor</text>
+        <text x="235.499" y="91.001" font-family="Arial" font-size="4" fill="black">Room 15</text>
+
+
+        
+        <!-- Circle elements with cx and cy attributes -->
+        <!-- room points -->
+        <circle id="proom1" cx="20" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom2" cx="49" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom3" cx="75" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom6" cx="180" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom7" cx="215" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom8" cx="245" cy="45" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom9" cx="20" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom10" cx="49" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom11" cx="85" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom12" cx="152" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom13" cx="180" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom14" cx="215" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="proom15" cx="245" cy="83" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+
+        <!-- corridor points -->
+        <circle id="pc1" cx="20" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc2" cx="49" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc3" cx="75" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc4" cx="85" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc5" cx="110" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc6" cx="123" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc7" cx="136" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc8" cx="152" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc9" cx="180" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc10" cx="215" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc11" cx="245" cy="66" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+
+        <!-- stairs points -->
+        <!-- <circle id="pc12" cx="110" cy="50" r=".05" stroke="black" stroke-width="1" fill="transparent" /> -->
+        <circle id="pc13" cx="110" cy="50" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc14" cx="110" cy="26" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc15" cx="97" cy="50" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc16" cx="97" cy="26" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc17" cx="123" cy="26" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc18" cx="136" cy="26" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc19" cx="148" cy="26" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc20" cx="136" cy="50" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+        <circle id="pc21" cx="148" cy="50" r=".05" stroke="black" stroke-width="1" fill="transparent" />
+
+    </svg>
+    <div id="chart" style="width: 100%; height: 300px;"></div>
+
+    <script>
+        // Function to find the shortest path using Dijkstra's algorithm
+        function findShortestPath(graph, startRoom, endRoom) {
+            const visited = new Set();
+            const distances = {};
+            const previous = {};
+            const queue = [];
+
+            // Initialization
+            for (const room in graph) {
+                distances[room] = Infinity;
+                previous[room] = null;
+            }
+
+            distances[startRoom] = 0;
+            queue.push({ room: startRoom, distance: 0 });
+
+            // Dijkstra's algorithm
+            while (queue.length > 0) {
+                queue.sort((a, b) => a.distance - b.distance);
+                const { room: currentRoom, distance: currentDistance } = queue.shift();
+
+                if (visited.has(currentRoom)) continue;
+
+                visited.add(currentRoom);
+
+                for (const neighbor of graph[currentRoom]) {
+                    const newDistance = currentDistance + 1;
+
+                    if (newDistance < distances[neighbor]) {
+                        distances[neighbor] = newDistance;
+                        previous[neighbor] = currentRoom;
+                        queue.push({ room: neighbor, distance: newDistance });
+                    }
+                }
+            }
+
+            // Reconstruct the path
+            const path = [];
+            let current = endRoom;
+
+            while (current !== null) {
+                path.unshift(current);
+                current = previous[current];
+            }
+
+            return path;
+        }
+
+        const graph = {
+            proom1: ['pc1'],
+            proom2: ['pc2'],
+            proom3: ['pc3'],
+            proom6: ['pc9'],
+            proom7: ['pc10'],
+            proom8: ['pc11'],
+            proom9: ['pc1'],
+            proom10: ['pc2'],
+            proom11: ['pc4'],
+            proom12: ['pc8'],
+            proom13: ['pc9'],
+            proom14: ['pc10'],
+            proom15: ['pc11'],
+            pc1: ['proom1','proom9','pc2'],
+            pc2: ['proom2','proom10','pc1','pc3'],
+            pc3: ['proom3','pc2','pc4'],
+            pc4: ['pc3','proom11','pc5'],
+            pc5: ['pc4','pc6','pc13'],
+            pc6: ['pc5','pc7','pc17'],
+            pc7: ['pc6','pc8','pc20'],
+            pc8: ['pc7','pc9','proom12'],
+            pc9: ['proom6','proom13','pc8','pc10'],
+            pc10: ['proom7','proom14','pc9','pc11'],
+            pc11: ['proom8','proom15','pc10'],
+            pc13: ['pc5','pc14','pc15'],
+            pc14: ['pc13','pc16','pc17'],
+            pc15: ['pc13'],
+            pc16: ['pc14'],
+            pc17: ['pc14','pc18','pc6'],
+            pc18: ['pc17','pc19','pc20'],
+            pc19: ['pc18'],
+            pc20: ['pc21','pc7','pc18'],
+            pc21: ['pc20'],
+            // ... add more rooms and their neighbors ...
+        };
+
+
+        const startRoom = "proom" + "{{i}}";
+        const endRoom = "proom" + "{{j}}";
+
+        const shortestPath = findShortestPath(graph, startRoom, endRoom);
+        console.log(shortestPath); // shortest path array
+
+        // Save the path first
+        const linesToDraw = [];
+        for (let i = 0; i < shortestPath.length - 1; i++) {
+            const currentRoom = document.getElementById(shortestPath[i]);
+            const nextRoom = document.getElementById(shortestPath[i + 1]);
+
+            linesToDraw.push({
+                x1: parseFloat(currentRoom.getAttribute('cx')),
+                y1: parseFloat(currentRoom.getAttribute('cy')),
+                x2: parseFloat(nextRoom.getAttribute('cx')),
+                y2: parseFloat(nextRoom.getAttribute('cy')),
+            });
+        }
+        console.log(linesToDraw) // all points of the path
+
+        let pathData = '';
+
+        // Function to create a <path> element and append it to the SVG
+        function createPathElement(pathData) {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.style.fill = 'none';
+            path.style.stroke = 'black';
+            path.style.strokeWidth = '0.8';
+            document.querySelector('svg').appendChild(path);
+            return path;  // Return the path element
+        }
+
+        // Create path data from linesToDraw array
+        pathData = linesToDraw.reduce((acc, line, index) => {
+            const command = index === 0 ? 'M' : 'L';
+            return `${acc} ${command} ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`;
+        }, '');
+
+        // Create and append the path element
+        const pathElement = createPathElement(pathData);
+        
+        pathElement.style.strokeDasharray = 2;
+        pathElement.style.strokeDashoffset = 2;
+
+        console.log(pathElement)
+
+        // Now you can use the pathElement variable for animations or other manipulations
+        anime({
+            targets: pathElement,
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'linear',
+            duration: 12000,
+            loop: true
+        });
+
+    </script>
+
+</body>
+</html>

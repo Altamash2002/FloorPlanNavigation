@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import urllib.parse
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -75,19 +75,10 @@ WSGI_APPLICATION = 'floorplan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES ={
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'Navigation',
-        'ENFORCE_SCHEMA': False,  # Set to True if you want to enforce the schema
-        'CLIENT': {
-            'host': 'mongodb+srv://' + urllib.parse.quote_plus('altamash') + ':' + urllib.parse.quote_plus('altamash2003@') + '@cluster0.xhzpnhc.mongodb.net/?retryWrites=true&w=majority',  # Replace with your MongoDB Atlas URI
-            'port': 27017,
-            'username': "altamash",
-            'password': "altamash2003@",
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

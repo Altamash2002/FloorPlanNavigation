@@ -21,5 +21,7 @@ from navigation.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , home ,name="home"),
-    path('floor-navigate' , navigate ,name="navigate"),
+    path('floor-navigate' , navigate ,name="navigate"),    
+    path('signup/', signup, name='signup'),
+    path('login/', user_login, name='login'),
 ]

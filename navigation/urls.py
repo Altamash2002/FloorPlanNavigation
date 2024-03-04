@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('' , home ,name="home"),
+    path('' , detail ,name="detail"),
+    path('choose' , home ,name="home"),
     path('floor-navigate' , navigate ,name="navigate"),
 ]

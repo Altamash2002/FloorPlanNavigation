@@ -83,7 +83,7 @@
     <h1>This is Indoor Navigation App</h1>
 
     <div class="choose2">
-        <h2>Choose Your Destination:</h2>
+        <h2> Your Destination is :  {{destination}}</h2>
         <form action="floor-navigate" name="Haus" method='get'>
 
             <h4 class="txt">Floor:</h4>
@@ -102,9 +102,13 @@
             </select> <br>
             <h4 class="txt">To:</h4>
             <select class='iselect2 my-3' name="To">
-                {% for i in places %}
-                <option value="{{i.id}}">{{i.name}}</option>
-                {% endfor %}
+                {% if destination %}
+                    <option value="{{ destination.id }}" selected>{{destination.name}}</option>
+                {% else %}
+                    {% for i in places %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                {% endif %}
             </select> <br>
             <input class='btn2' type="submit" value="Search">
         </form>

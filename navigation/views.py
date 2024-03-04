@@ -1,15 +1,17 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Place , Teacher
 
-def home(request):
-    # place1 = Place(name = 'name1' , floor = 1)
-    # teacher = Teacher(name = 'teacher1' , place = 'name1')
+def detail(request):
+    teachers = Teacher.objects.all()
+    return render(request, "detail.html", {"teachers":teachers})
 
-    # place1.save()
-    # teacher.save()
+def home(request):
+    if request.method == 'POST':
+        teacher = request.POST.get('teacher')
+        destination = get_object_or_404(Teacher, name=teacher).place
     places = Place.objects.all()
-    return render(request, "index.html", {"places": places})
+    return render(request, "index.html", {"places": places, "destination": destination})
 
 def navigate(request):
 

@@ -1,186 +1,367 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>college SVG</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+{% include "floor.html" %}
 
-    <!-- bootstrap link -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+{% block script %}    
+    <script>
+        // Function to find the shortest path using Dijkstra's algorithm
+        function findShortestPath(graph, startRoom, endRoom) {
+            const visited = new Set();
+            const distances = {};
+            const previous = {};
+            const queue = [];
 
-</head>
-<body>
-    
-    <svg viewBox="0 0 320 300" width="80%" height="auto" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="28.75" y="10.056" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="66.25" y="10" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="10" y="76.001" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="28.75" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="66.25" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="103.75" y1="76.001" x2="141.249" y2="76.001" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="84.999" y="21" width="15" height="32.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="145" y="21" width="15" height="32.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="141.249" y="76.001" width="18.75" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="160" y="10" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="160" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="197.5" y="10" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="197.5" y="76.001" width="37.5" height="43.999" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="10" y1="53.999" x2="10" y2="76.001" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
-        <rect x="234.999" y="17" width="18.75" height="37" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
-        <rect x="234.999" y="76.001" width="18.75" height="36" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
-        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 253.979 15 C 326.982 11.89 330.425 119.999 253.749 114 L 253.979 15 Z" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)" />
-        <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="99.999" y1="21" x2="145" y2="21" transform="matrix(1, 0, 0, 1, 2.842170943040401e-14, 0)"/>
+            // Initialization
+            for (const room in graph) {
+                distances[room] = Infinity;
+                previous[room] = null;
+            }
 
-        <!-- starting point -->
-        <circle cx="122.5" cy="145" r="4" stroke="black" stroke-width="1" fill="red" />
+            distances[startRoom] = 0;
+            queue.push({ room: startRoom, distance: 0 });
 
-        <!-- text -->
-        <text x="107.5" y="160" font-family="Arial" font-size="5" fill="black">(Stating Point)</text>
+            // Dijkstra's algorithm
+            while (queue.length > 0) {
+                queue.sort((a, b) => a.distance - b.distance);
+                const { room: currentRoom, distance: currentDistance } = queue.shift();
 
-        <!-- Room labels -->
-        <text x="10.75" y="25" font-family="Arial" font-size="5" fill="black">Room 1</text>
-        <text x="35.75" y="25" font-family="Arial" font-size="5" fill="black">Room 2</text>
-        <text x="67" y="25" font-family="Arial" font-size="5" fill="black">Room 3</text>        
-        <text x="85.499" y="36" font-family="Arial" font-size="4" fill="black">Room 4</text>
-        <text x="145.75" y="36" font-family="Arial" font-size="4" fill="black">Room 5</text>
-        <text x="168.5" y="25" font-family="Arial" font-size="5" fill="black">Room 6</text>
-        <text x="205" y="25" font-family="Arial" font-size="5" fill="black">Room 7</text>
-        <text x="235.499" y="25" font-family="Arial" font-size="5" fill="black">Room 8</text>
-        <text x="10.75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 9</text>
-        <text x="35.75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 10</text>
-        <text x="75" y="91.001" font-family="Arial" font-size="5" fill="black">Room 11</text>
-        <text x="225" y="65.999" font-family="Arial" font-size="5" fill="black">Corridor</text>
-        <text x="141.749" y="91.001" font-family="Arial" font-size="4" fill="black">Room 12</text>
-        <text x="170.5" y="91.001" font-family="Arial" font-size="5" fill="black">Room 13</text>
-        <text x="205" y="91.001" font-family="Arial" font-size="5" fill="black">Room 14</text>
-        <text x="13.75" y="65.999" font-family="Arial" font-size="5" fill="black">Corridor</text>
-        <text x="235.499" y="91.001" font-family="Arial" font-size="4" fill="black">Room 15</text>
+                if (visited.has(currentRoom)) continue;
 
+                visited.add(currentRoom);
 
-        <!-- paths -->
-        <polyline id="startToRoom1" class="path" points="122.5,145 122.5,60 18,60 18,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom2" class="path" points="122.5,145 122.5,60 47.75,60 47.75,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom3" class="path" points="122.5,145 122.5,60 75.5,60 75.5,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom4" class="path" points="122.5,145 122.5,60 92.3,60 92.3,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom5" class="path" points="122.5,145 122.5,60 153,60 153,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom6" class="path" points="122.5,145 122.5,60 179,60 179,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom7" class="path" points="122.5,145 122.5,60 216.5,60 216.5,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom8" class="path" points="122.5,145 122.5,60 244,60 244,45" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom9" class="path" points="122.5,145 122.5,69 18,69 18,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom10" class="path" points="122.5,145 122.5,69 47.75,69 47.75,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom11" class="path" points="122.5,145 122.5,69 85,69 85,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom12" class="path" points="122.5,145 122.5,69 153,69 153,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom13" class="path" points="122.5,145 122.5,69 179,69 179,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom14" class="path" points="122.5,145 122.5,69 216.5,69 216.5,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-        <polyline id="startToRoom15" class="path" points="122.5,145 122.5,69 244,69 244,85" style="fill:none;stroke:rgb(58, 58, 101);stroke-width:0.8; display:none;"/>
-    </svg>
-    <!-- <script>
+                for (const neighbor of graph[currentRoom]) {
+                    const newDistance = currentDistance + 1;
 
-        // change path function        
-        let i = 1;
-        let id = "startToRoom1";
-        function changePath(){
-            id = 'startToRoom' + i%15;
-            i++;
+                    if (newDistance < distances[neighbor]) {
+                        distances[neighbor] = newDistance;
+                        previous[neighbor] = currentRoom;
+                        queue.push({ room: neighbor, distance: newDistance });
+                    }
+                }
+            }
+
+            // Reconstruct the path
+            const path = [];
+            let current = endRoom;
+
+            while (current !== null) {
+                path.unshift(current);
+                current = previous[current];
+            }
+
+            return path;
         }
 
-        console.log(id);
-        // Get the length of each polyline path
-        var path = document.querySelector(`#${id}`);
-        path.style.display = 'inline';
+        const graph = {
+            proom1: ['pc1'],
+            proom2: ['pc2'],
+            proom3: ['pc3'],
+            proom6: ['pc9'],
+            proom7: ['pc10'],
+            proom8: ['pc11'],
+            proom9: ['pc1'],
+            proom10: ['pc2'],
+            proom11: ['pc4'],
+            proom12: ['pc8'],
+            proom13: ['pc9'],
+            proom14: ['pc10'],
+            proom15: ['pc11'],
+            pc1: ['proom1','proom9','pc2'],
+            pc2: ['proom2','proom10','pc1','pc3'],
+            pc3: ['proom3','pc2','pc4'],
+            pc4: ['pc3','proom11','pc5'],
+            pc5: ['pc4','pc6','pc13'],
+            pc6: ['pc5','pc7','pc17'],
+            pc7: ['pc6','pc8','pc20'],
+            pc8: ['pc7','pc9','proom12'],
+            pc9: ['proom6','proom13','pc8','pc10'],
+            pc10: ['proom7','proom14','pc9','pc11'],
+            pc11: ['proom8','proom15','pc10'],
+            pc13: ['pc5','pc14','pc15'],
+            pc14: ['pc13','pc16','pc17'],
+            pc15: ['pc13'],
+            pc16: ['pc14'],
+            pc17: ['pc14','pc18','pc6'],
+            pc18: ['pc17','pc19','pc20'],
+            pc19: ['pc18'],
+            pc20: ['pc21','pc7','pc18'],
+            pc21: ['pc20'],
+            // ... add more rooms and their neighbors ...
+        };
+
+
+        const startRoom = "p" + "{{i}}";
+        const endRoom = "p" + "{{j}}";
+
+        function showAlert(str1,str2,wait){
+            // Create a new div element with Bootstrap alert classes
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-warning alert-dismissible fade show mx-1';
+            alertDiv.setAttribute('role', 'alert');
+            
+            // Set the content for the alert
+            alertDiv.innerHTML = `<strong>${str1}</strong>${str2}`;
+    
+            // Create the close button
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Close');
+    
+            // Append the close button to the alert div
+            alertDiv.appendChild(closeButton);
+    
+            // Insert the alert div at the top of the body
+            document.body.insertBefore(alertDiv, document.body.firstChild);
+
+            setTimeout(function () {
+                alertDiv.remove();
+            }, wait);
+        }
+
+        if (startRoom == endRoom) {
+            showAlert("Congrats! ", " You have reached the destination.",100000)
+        }
         
-        var length = path.getTotalLength();
-        // Set the stroke-dasharray to the path length and initially hide the stroke
-        path.style.strokeDasharray = 2;
-        path.style.strokeDashoffset = length;
+        highlightLocation(startRoom,0.8,1,'red')
+        highlightLocationDes(endRoom,0.8,1,'green')
 
-        // Use anime.js to animate the stroke along the path
+
+        const shortestPath = findShortestPath(graph, startRoom, endRoom);
+        console.log(shortestPath); // shortest path array
+
+        // Save the path first
+        const linesToDraw = [];
+        for (let i = 0; i < shortestPath.length - 1; i++) {
+            const currentRoom = document.getElementById(shortestPath[i]);
+            const nextRoom = document.getElementById(shortestPath[i + 1]);
+
+            linesToDraw.push({
+                x1: parseFloat(currentRoom.getAttribute('cx')),
+                y1: parseFloat(currentRoom.getAttribute('cy')),
+                x2: parseFloat(nextRoom.getAttribute('cx')),
+                y2: parseFloat(nextRoom.getAttribute('cy')),
+            });
+        }
+        console.log(linesToDraw) // all points of the path
+
+        let pathData = '';
+
+        // Function to create a <path> element and append it to the SVG
+        function createPathElement(pathData) {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('id', 'path');
+            path.style.fill = 'none';
+            path.style.stroke = 'black';
+            path.style.strokeWidth = '0.8';
+            document.querySelector('svg').appendChild(path);
+            return path;  // Return the path element
+        }
+
+        // Create path data from linesToDraw array
+        pathData = linesToDraw.reduce((acc, line, index) => {
+            const command = index === 0 ? 'M' : 'L';
+            return `${acc} ${command} ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`;
+        }, '');
+
+        // Create and append the path element
+        const pathElement = createPathElement(pathData);
+        
+        pathElement.style.strokeDasharray = 2;
+        pathElement.style.strokeDashoffset = 2;
+
+        console.log(pathElement)
+
+        // Now you can use the pathElement variable for animations or other manipulations
         anime({
-            targets: `#${id}`,
+            targets: pathElement,
             strokeDashoffset: [anime.setDashoffset, 0],
             easing: 'linear',
-            duration: 10000,
+            duration: 12000,
             loop: true
         });
 
-    </script> -->
-    <!-- <script>
-        // Initialize variables
-        let i = "#{{ destination }}";
-        console.log(i);
-    
-        // Function to change path
-        // function changePath() {
-        //     // Get the current path element and hide it
-        //     let currentPath = document.querySelector(`#startToRoom${i}`);
-        //     currentPath.style.display = 'none';
-    
-        //     // Increment the counter
-        //     i = (i % 15) + 1;
-    
-        //     // Get the new path element and display it
-        //     let newPath = document.querySelector(`#startToRoom${i}`);
-        //     newPath.style.display = 'inline';
-    
-        //     // Get the length of the new path
-        //     var length = newPath.getTotalLength();
-    
-        //     // Set the stroke-dasharray to the path length and initially hide the stroke
-        //     newPath.style.strokeDasharray = 2;
-        //     newPath.style.strokeDashoffset = length;
-    
-        //     // Use anime.js to animate the stroke along the path
-        //     anime({
-        //         targets: `#startToRoom${i}`,
-        //         strokeDashoffset: [anime.setDashoffset, 0],
-        //         easing: 'linear',
-        //         duration: 10000,
-        //         loop: true
-        //     });
-        // }
-        // // Display the first path initially
-        let path = document.querySelector(i);
-        path.style.display = 'inline';
-        path.style.strokeDasharray = 2;
-        path.style.strokeDashoffset = 2;
-    
-            // Use anime.js to animate the stroke along the path
-        anime({
-            targets: i,
-            strokeDashoffset: [anime.setDashoffset, 0],
-            easing: 'linear',
-            duration: 7000,
-            loop: true
-        });
 
-    </script> -->
-    <script>
-        // Initialize variables
-        let i = "{{ destination }}";
-        console.log(i);
-    
-        // Display the first path initially
-        let path = document.querySelector(`#startToRoom${i}`);
-        path.style.display = 'inline';
-        path.style.strokeDasharray = 2;
-        path.style.strokeDashoffset = 2;
-    
-        // Use anime.js to animate the stroke along the path
-        anime({
-            targets: `#startToRoom${i}`,
-            strokeDashoffset: [anime.setDashoffset, 0],
-            easing: 'linear',
-            duration: 7000,
-            loop: true
-        });
+
+        // code to scan qr code
+        
+        let scanner;
+        
+        function startCamera() {
+            // Access the camera and start scanning
+            const video = document.createElement('video');
+            video.style.width = '100%';
+            video.style.height = '80%';
+            video.style.position = 'fixed';
+            video.style.top = '5';
+            video.style.left = '0';
+            document.body.appendChild(video);
+
+            scanner = new Instascan.Scanner({ video: video });
+            scanner.addListener('scan', function(content) {
+                // This function is called when a QR code is scanned
+                console.log(content);
+                highlightLocation(content,0.8,1,'red'); // You can use the scanned content here
+                updateShortestPath(content)
+
+                scanner.stop();
+
+                // Hide the video element
+                video.style.display = 'none';
+
+            });
+
+            Instascan.Camera.getCameras().then(function (cameras) {
+                if (cameras.length == 1) {
+                    scanner.start(cameras[0]);
+                } else if (cameras.length > 1){
+                    scanner.start(cameras[1]);
+                    video.style.transform = 'scaleX(1)';
+                }else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function (e) {
+                console.error(e);
+            });
+        }
+
+
+
+        function highlightLocation(locationId, initialRadius, maxRadius, color) {
+            // Hide the previous highlighted circle
+            const previousHighlighted = document.querySelector('.highlighted');
+            if (previousHighlighted) {
+                previousHighlighted.style.display = 'none';
+                previousHighlighted.classList.remove('highlighted');
+            }
+
+            const location = document.getElementById(locationId);
+
+            if (location) {
+                location.style.display = 'inline';
+                location.setAttribute('stroke', color);
+                location.setAttribute('fill', color);
+                location.classList.add('highlighted');
+                let currentRadius = initialRadius;
+
+                // Function to update the radius at regular intervals
+                function updateRadius() {
+                    // Toggle between initialRadius and maxRadius
+                    currentRadius = currentRadius === initialRadius ? maxRadius : initialRadius;
+
+                    // Apply the new radius
+                    location.setAttribute('r', currentRadius);
+                }
+
+                // Use setInterval to call updateRadius at regular intervals
+                const intervalId = setInterval(updateRadius, 400); // Change the interval as needed (milliseconds)
+
+                // Stop the animation after a certain time (e.g., 5000 milliseconds or 5 seconds)
+                setTimeout(() => {
+                    clearInterval(intervalId);
+                    location.style.display = 'none'; // Hide the circle after the animation
+                }, 5000000);
+            }
+            else{
+                showAlert("Oops! ", " Please scan the correct QR code.",10000);
+            }
+        }
+
+        function highlightLocationDes(locationId, initialRadius, maxRadius, color) {
+            
+            const location = document.getElementById(locationId);
+
+            if (location) {
+                location.style.display = 'inline';
+                location.setAttribute('stroke', color);
+                location.setAttribute('fill', color);
+                let currentRadius = initialRadius;
+
+                // Function to update the radius at regular intervals
+                function updateRadius() {
+                    // Toggle between initialRadius and maxRadius
+                    currentRadius = currentRadius === initialRadius ? maxRadius : initialRadius;
+
+                    // Apply the new radius
+                    location.setAttribute('r', currentRadius);
+                }
+
+                // Use setInterval to call updateRadius at regular intervals
+                const intervalId = setInterval(updateRadius, 400); // Change the interval as needed (milliseconds)
+
+                // Stop the animation after a certain time (e.g., 5000 milliseconds or 5 seconds)
+                setTimeout(() => {
+                    clearInterval(intervalId);
+                    location.style.display = 'none'; // Hide the circle after the animation
+                }, 5000000);
+            }
+            else{
+                showAlert("Oops! ", " Please scan the correct QR code.",10000);
+            }
+        }
+
+        // Function to update the shortest path based on the scanned location
+        function updateShortestPath(locationId) {
+            // Ensure that the location exists in the graph
+            if (!(locationId in graph)) {
+                console.error('Invalid location ID:', locationId);
+            }
+
+            const previousPath = document.getElementById('path');
+            if (previousPath) {
+                previousPath.remove();
+            }
+
+            // Update the startRoom to the scanned location
+            const startRoom = locationId;
+
+            // Recalculate the shortest path from the scanned location to the endRoom
+            const updatedShortestPath = findShortestPath(graph, startRoom, endRoom);            
+            highlightLocationDes(endRoom,0.8,1,'green');
+            if(startRoom == endRoom){           
+                showAlert("Congrats! ", " You have reached the destination.",100000);
+            }
+            console.log(updatedShortestPath); // updated shortest path array
+
+            // Update the linesToDraw array based on the new path
+            const updatedLinesToDraw = [];
+            for (let i = 0; i < updatedShortestPath.length - 1; i++) {
+                const currentRoom = document.getElementById(updatedShortestPath[i]);
+                const nextRoom = document.getElementById(updatedShortestPath[i + 1]);
+
+                updatedLinesToDraw.push({
+                    x1: parseFloat(currentRoom.getAttribute('cx')),
+                    y1: parseFloat(currentRoom.getAttribute('cy')),
+                    x2: parseFloat(nextRoom.getAttribute('cx')),
+                    y2: parseFloat(nextRoom.getAttribute('cy')),
+                });
+            }
+            console.log(updatedLinesToDraw); // updated points of the path
+
+            // Update the path data and animate the path
+            const updatedPathData = updatedLinesToDraw.reduce((acc, line, index) => {
+                const command = index === 0 ? 'M' : 'L';
+                return `${acc} ${command} ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`;
+            }, '');
+
+                    
+            // Create and append the path element
+            const pathElement = createPathElement(updatedPathData);
+            
+            pathElement.style.strokeDasharray = 2;
+            pathElement.style.strokeDashoffset = 2;
+
+            console.log(pathElement)
+
+            // Now you can use the pathElement variable for animations or other manipulations
+            anime({
+                targets: pathElement,
+                strokeDashoffset: [anime.setDashoffset, 0],
+                easing: 'linear',
+                duration: 12000,
+                loop: true
+            });
+        }
+
     </script>
-
-
-    <!-- bootstrap js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock  %}

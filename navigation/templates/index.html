@@ -4,37 +4,43 @@
 
     <div class="container choose2">
         <h1 class="text-center my-5">Your Destination Infomation</h1>
-        <h2>Your Destination is: {{destination}}</h2>
+        <h5>Your Destination is: Teacher = <span class="text-primary">{{teacher}}</span>  ,  Building = <span class="text-primary">{{d_building}}</span>  ,  Floor = <span class="text-primary">{{d_floor.name}}</span>  ,  Place = <span class="text-primary">{{d_place}}</span></h5>
 
-        <form class="bg-white shadow rounded p-5" action="floor-navigate" name="Haus" method='get'>
+        <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get'>
 
             <div class="form-group">
-                <label for="floor" class="txt">Floor:</label>
-                <select class='form-control iselect2 my-3' id="floor" name="Floor">
-                    <option value="ground">Ground Floor</option>
-                    {% for i in '123456' %}
-                        <option value="floor {{ i }}">Floor {{ i }}</option>
+                <h6>From:</h6>
+                <select class='form-control iselect2 my-3' id="from-floor" name="from_floor" required>
+                    <option value="" selected disabled>Select Floor</option>
+                    {% for floor in floors %}
+                    <option value="{{floor.id}}">{{floor.name}}</option>
+                    {% endfor %}
+                </select>
+                <select class='form-control iselect2 my-3' id="from-place" name="from_place" required>
+                    <option value="" selected disabled>Select place</option>
+                    {% for place in places %}
+                    <option value="{{place.title}}">{{place.name}}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="from" class="txt">From:</label>
-                <select class='form-control iselect2 my-3' id="from" name="From">
-                    {% for i in places %}
-                    <option value="{{i.title}}">{{i.name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="to" class="txt">To:</label>
-                <select class='form-control iselect2 my-3' id="to" name="To">
-                    {% if destination %}
-                        <option value="{{ destination.title }}" selected>{{destination.name}}</option>
+                <h6>To:</h6>
+                <select class='form-control iselect2 my-3' id="to-floor" name="to_floor" required>
+                    {% if d_floor %}
+                        <option value="{{ d_floor.id }}" selected>{{d_floor.name}}</option>
                     {% else %}
-                        {% for i in places %}
-                        <option value="{{i.title}}">{{i.name}}</option>
+                        {% for floor in floors %}
+                        <option value="{{floor.id}}">{{floor.name}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+                <select class='form-control iselect2 my-3' id="to-place" name="to_place" required>
+                    {% if d_place %}
+                        <option value="{{ d_place.title }}" selected>{{d_place.name}}</option>
+                    {% else %}
+                        {% for place in places %}
+                        <option value="{{place.title}}">{{place.name}}</option>
                         {% endfor %}
                     {% endif %}
                 </select>

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <style>
+        .form-control {
+            margin: 20px 0px;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <h2>Visitor Form</h2>
+        <form id="visitorForm" method="post" action="{% url 'register' %}" class="needs-validation bg-white shadow rounded p-5" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.mobile.label_tag }}
+                {{ form.mobile }}
+            </div>
+            <div class="form-group">
+                {{ form.city.label_tag }}
+                {{ form.city }}
+            </div>
+            <div class="form-group">
+                {{ form.reason.label_tag }}
+                {{ form.reason }}
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("submitBtn").addEventListener("click", function (event) {
+                var form = document.getElementById("visitorForm");
+                if (!form.checkValidity()) {
+                    event.preventDefault(); // Prevent form submission if not valid
+                    event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+            });
+        });
+    </script>
+{% endblock %}

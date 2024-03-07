@@ -1,5 +1,11 @@
 {% include "floor.html" %}
 
+{% block floor %}
+
+    {{floor_map|safe }}
+
+{% endblock  %}
+
 {% block script %}    
     <script>
         // Function to find the shortest path using Dijkstra's algorithm
@@ -365,3 +371,4 @@
 
     </script>
 {% endblock  %}
+

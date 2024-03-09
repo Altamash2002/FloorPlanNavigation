@@ -34,8 +34,17 @@ def navigate(request):
 
     pfrom = request.GET.get('from_place')
     to = request.GET.get('to_place')
-    floor_id = request.GET.get('from_floor')
-    floor_map = get_object_or_404(Floor,id=floor_id).svg
+    from_floor_id = request.GET.get('from_floor')
+    # to_floor_id = request.GET.get('to_floor')
+
+    # if from_floor_id > to_floor_id:
+    #     to = 'c16'
+    # elif from_floor_id < to_floor_id:
+    #     to = 'c15'
+    # else:
+    #     to = request.GET.get('to_place')
+
+    floor_map = get_object_or_404(Floor,id=from_floor_id).svg
 
     return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map})
 

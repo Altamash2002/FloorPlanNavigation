@@ -45,15 +45,20 @@
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
         <div class="container my-5">
             <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get'>
+                
 
                 <div class="form-group">
-                    <h6 class="mb-3">From:</h6>
-                    <select class='form-select iselect2' name="from-building" id="fromBuildingSelect" required>
+                    <h6 class="mb-3">Building:</h6>
+                    <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
                         <option value="" selected disabled>Select Building</option>
                         {% for building in buildings %}
                             <option value="{{ building.id }}">{{ building.name }}</option>
                         {% endfor %}
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <h6 class="mb-3">From:</h6>
                     <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
                         <option value="" selected disabled>Select Floor</option>
                         {% for floor in floors %}
@@ -70,12 +75,6 @@
     
                 <div class="form-group">
                     <h6 class="mb-3">To:</h6>
-                    <select class='form-select iselect2' name="to-building" id="toBuildingSelect" required>
-                        <option value="" selected disabled>Select Building</option>
-                        {% for building in buildings %}
-                            <option value="{{ building.id }}">{{ building.name }}</option>
-                        {% endfor %}
-                    </select>
                     <select class='form-select iselect2 my-3' id="to-floor" name="to_floor" required>
                         <option value="" selected disabled>Select Floor</option>
                         {% for floor in floors %}
@@ -98,10 +97,11 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("myForm")
         // Initial population of the second dropdown
         updateOptions("departmentSelect", "teacherSelect", "teacher");
-        updateOptions("fromBuildingSelect", "from-floor", "floor");
-        updateOptions("toBuildingSelect", "to-floor", "floor");
+        updateOptions("BuildingSelect", "from-floor", "floor");
+        updateOptions("BuildingSelect", "to-floor", "floor");
         updateOptions("to-floor", "to-place", "place");
         updateOptions("from-floor", "from-place", "place");
 
@@ -110,13 +110,11 @@
             updateOptions("departmentSelect", "teacherSelect", "teacher");
         });
 
-        document.getElementById("fromBuildingSelect").addEventListener("change", function() {
-            updateOptions("fromBuildingSelect", "from-floor", "floor");
+        document.getElementById("BuildingSelect").addEventListener("change", function() {
+            updateOptions("BuildingSelect", "from-floor", "floor");
+            updateOptions("BuildingSelect", "to-floor", "floor");
         });
 
-        document.getElementById("toBuildingSelect").addEventListener("change", function() {
-            updateOptions("toBuildingSelect", "to-floor", "floor");
-        });
 
         document.getElementById("to-floor").addEventListener("change", function() {
             updateOptions("to-floor", "to-place", "place");

@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Place , Teacher, Department, Floor
+from .models import Place , Teacher, Department, Floor, Building
 from .forms import VisitorForm
 
 def detail(request):    
@@ -10,7 +10,8 @@ def detail(request):
     departments = Department.objects.all()
     places = Place.objects.all()
     floors = Floor.objects.all()
-    return render(request, "detail.html", {"teachers":teachers, "departments":departments, "places":places, "floors":floors})
+    buildings = Building.objects.all()
+    return render(request, "detail.html", {"teachers":teachers, "departments":departments, "places":places, "floors":floors, "buildings":buildings})
 
 def home(request):
     d_building = None
@@ -19,9 +20,10 @@ def home(request):
     if request.method == 'POST':
         teacher_id = request.POST.get('teacher')
         teacher = Teacher.objects.get(id=teacher_id)
-        d_place = get_object_or_404(Teacher, id=teacher_id).place
-        d_floor = get_object_or_404(Teacher, id=teacher_id).floor
-        d_building = d_floor.building
+        selected_teacher = get_object_or_404(Teacher, id=teacher_id)
+        d_place = selected_teacher.place
+        d_floor = selected_teacher.floor
+        d_building = selected_teacher.building
 
     places = Place.objects.all()
     floors = Floor.objects.filter(building=d_building)

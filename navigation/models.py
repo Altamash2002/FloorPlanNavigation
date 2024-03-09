@@ -38,6 +38,7 @@ class Teacher(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, null=True)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name

@@ -4,9 +4,17 @@
 
     <div class="container choose2">
         <h1 class="text-center my-5">Your Destination Infomation</h1>
-        <h5>Your Destination is: Teacher = <span class="text-primary">{{teacher}}</span>  ,  Building = <span class="text-primary">{{d_building}}</span>  ,  Floor = <span class="text-primary">{{d_floor.name}}</span>  ,  Place = <span class="text-primary">{{d_place}}</span></h5>
+        <h5>Your Destination is: <br> Teacher = <span class="text-primary">{{teacher}}</span>  ,  <br> Building = <span class="text-primary">{{d_building}}</span>  , <br> Floor = <span class="text-primary">{{d_floor.name}}</span>  , <br> Place = <span class="text-primary">{{d_place}}</span></h5>
 
-        <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get'>
+        <form class="bg-white shadow rounded p-5 my-5" action="floor-navigate" method='get'>
+            <h2 class="mb-4">Search Destination </h2>
+
+            <div class="form-group">
+                <h6 class="mb-3">Building:</h6>
+                <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
+                    <option value="{{ d_building.id }}" selected> Building - {{d_building.name}} </option>
+                </select>
+            </div>
 
             <div class="form-group">
                 <h6>From:</h6>

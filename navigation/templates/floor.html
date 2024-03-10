@@ -25,7 +25,7 @@
         <button onclick="startCamera()">Start Camera</button>
     </div>
 
-    <div class="my-2 row container-fluid justify-content-center">
+    <div class="my-5 row container-fluid justify-content-center">
       <div class="col-lg-2 col-md-3 col-5 mx-2">
         <div class="d-flex align-items-center">
           <div class="rounded-circle" style="width: 15px; height: 15px; background-color: red;"></div>
@@ -38,6 +38,22 @@
           <span class="ms-2">Destination</span>
         </div>
       </div>
+    </div>
+
+    <div class="text-center mt-5 mb-4 mb-md-0">
+      <form action="floor-navigate" method='get'>
+        <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      
+        <input type="hidden" id="building" name="building" value="{{ request.GET.building }}">
+        <input type="hidden" id="from-floor" name="from_floor" value="{{ request.GET.from_floor }}">
+        <input type="hidden" id="from-place" name="from_place" value="{{ request.GET.from_place }}">
+        <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
+        <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
+        
+        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor < request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="nextButton">Next Floor</button>
+        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor > request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="preButton">Next Floor</button>
+        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor</button>
+
+      </form>
     </div>
 
     {% block floor %}{% endblock  %}

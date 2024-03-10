@@ -8,6 +8,58 @@
 
 {% block script %}    
     <script>
+        // script to handle current_floor param
+        document.getElementById('nextButton').addEventListener('click', function() {
+            // Get the current_floor value from the hidden input
+            var currentFloorInput = document.getElementById('current_floor');
+            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+    
+            // Increase the current_floor value by one
+            currentFloorValue++;
+    
+            // Update the hidden input with the new current_floor value
+            currentFloorInput.value = currentFloorValue;
+            console.log(currentFloorInput.value);
+    
+            // Submit the form
+            this.form.submit();
+        });
+        document.getElementById('preButton').addEventListener('click', function() {
+            // Get the current_floor value from the hidden input
+            var currentFloorInput = document.getElementById('current_floor');
+            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+    
+            // Increase the current_floor value by one
+            currentFloorValue--;
+    
+            // Update the hidden input with the new current_floor value
+            currentFloorInput.value = currentFloorValue;
+            console.log(currentFloorInput.value);
+    
+            // Submit the form
+            this.form.submit();
+        });
+        document.getElementById('lastButton').addEventListener('click', function() {
+            // Get the current_floor value from the hidden input
+            var currentFloorInput = document.getElementById('current_floor');
+            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+    
+            // Increase the current_floor value by one
+            var temp = {{request.GET.to_floor}};
+            currentFloorValue = parseInt(temp,10) || 0;
+    
+            // Update the hidden input with the new current_floor value
+            currentFloorInput.value = currentFloorValue;
+
+            
+            console.log(currentFloorInput.value);
+    
+            // Submit the form
+            this.form.submit();
+        });
+        
+
+
         // Function to find the shortest path using Dijkstra's algorithm
         function findShortestPath(graph, startRoom, endRoom) {
             const visited = new Set();

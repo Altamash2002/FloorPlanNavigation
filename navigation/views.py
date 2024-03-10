@@ -33,16 +33,31 @@ def home(request):
 def navigate(request):
 
     pfrom = request.GET.get('from_place')
-    to = request.GET.get('to_place')
+    to_place = request.GET.get('to_place')
     from_floor_id = request.GET.get('from_floor')
-    # to_floor_id = request.GET.get('to_floor')
+    to_floor_id = request.GET.get('to_floor')
+    current_floor_id = request.GET.get('current_floor')
 
-    # if from_floor_id > to_floor_id:
-    #     to = 'c16'
-    # elif from_floor_id < to_floor_id:
-    #     to = 'c15'
-    # else:
-    #     to = request.GET.get('to_place')
+    if from_floor_id < to_floor_id:
+        to = 'c15'
+        if current_floor_id != from_floor_id:
+            if current_floor_id == to_floor_id:
+                pfrom = 'c16'
+                to = to_place
+            else:
+                pfrom = 'c16'
+                to = 'c15'
+    elif from_floor_id > to_floor_id:
+        to = 'c16'
+        if current_floor_id != from_floor_id:
+            if current_floor_id == to_floor_id:
+                pfrom = 'c15'
+                to = to_place
+            else:
+                pfrom = 'c15'
+                to = 'c16'
+    else:
+        to = to_place
 
     floor_map = get_object_or_404(Floor,id=from_floor_id).svg
 

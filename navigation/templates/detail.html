@@ -44,13 +44,13 @@
     </div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
         <div class="container my-5">
-            <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get'>
-                
+            <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get' id="floorNavigateForm">
+                <h2 class="mb-4">Search Place</h2>
+                <input type="hidden" id="current_floor" name="current_floor" value="">
 
                 <div class="form-group">
                     <h6 class="mb-3">Building:</h6>
                     <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
-                        <option value="" selected disabled>Select Building</option>
                         {% for building in buildings %}
                             <option value="{{ building.id }}">{{ building.name }}</option>
                         {% endfor %}
@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<script>
+<script>    
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("myForm")
         // Initial population of the second dropdown
@@ -178,6 +178,16 @@
                 {% endfor %}
             }
         }
+        
+        document.getElementById('floorNavigateForm').addEventListener('submit', function() {
+            // Get the selected value of the from_floor dropdown
+            var fromFloorSelect = document.getElementById('from-floor');
+            var selectedFromFloor = fromFloorSelect.options[fromFloorSelect.selectedIndex].value;
+
+            // Update the value of the hidden input with the selected from_floor value
+            document.getElementById('current_floor').value = selectedFromFloor;
+            console.log(document.getElementById('current_floor').value)
+        });
     });
 </script>
 

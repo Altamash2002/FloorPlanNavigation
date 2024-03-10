@@ -6,8 +6,9 @@
         <h1 class="text-center my-5">Your Destination Infomation</h1>
         <h5>Your Destination is: <br> Teacher = <span class="text-primary">{{teacher}}</span>  ,  <br> Building = <span class="text-primary">{{d_building}}</span>  , <br> Floor = <span class="text-primary">{{d_floor.name}}</span>  , <br> Place = <span class="text-primary">{{d_place}}</span></h5>
 
-        <form class="bg-white shadow rounded p-5 my-5" action="floor-navigate" method='get'>
+        <form class="bg-white shadow rounded p-5 my-5" action="floor-navigate" method='get' id="floorNavigateForm">
             <h2 class="mb-4">Search Destination </h2>
+            <input type="hidden" id="current_floor" name="current_floor" value="">
 
             <div class="form-group">
                 <h6 class="mb-3">Building:</h6>
@@ -57,5 +58,95 @@
             <input class='btn btn-primary btn2' type="submit" value="Search">
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            updateOptions("BuildingSelect", "from-floor", "floor");
+            updateOptions("BuildingSelect", "to-floor", "floor");
+            updateOptions("to-floor", "to-place", "place");
+            updateOptions("from-floor", "from-place", "place");
+
+            document.getElementById("BuildingSelect").addEventListener("change", function() {
+                updateOptions("BuildingSelect", "from-floor", "floor");
+                updateOptions("BuildingSelect", "to-floor", "floor");
+            });
+
+
+            document.getElementById("to-floor").addEventListener("change", function() {
+                updateOptions("to-floor", "to-place", "place");
+            });
+
+            document.getElementById("from-floor").addEventListener("change", function() {
+                updateOptions("from-floor", "from-place", "place");
+            });
+
+            function updateOptions(sourceId, targetId , changingOp) {
+                var selectedSource = document.getElementById(sourceId).value;
+                var targetSelect = document.getElementById(targetId);
+
+                // Clear existing options
+                targetSelect.innerHTML = '';
+
+                // Add options based on the selected source
+                if (changingOp == "teacher") {
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Select Teacher';
+                    targetSelect.appendChild(defaultOption);
+
+                    {% for teacher in teachers %}
+                        if ("{{ teacher.department.id }}" === selectedSource || selectedSource === "") {
+                            var option = document.createElement('option');
+                            option.value = "{{ teacher.id }}";
+                            option.innerHTML = "{{ teacher.name }}";
+                            targetSelect.appendChild(option);
+                        }
+                    {% endfor %}
+                }
+                if (changingOp == "floor") {
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Select Floor';
+                    targetSelect.appendChild(defaultOption);
+
+                    {% for floor in floors %}
+                        if ("{{ floor.building.id }}" === selectedSource || selectedSource === "") {
+                            var option = document.createElement('option');
+                            option.value = "{{ floor.id }}";
+                            option.innerHTML = "{{ floor }}";
+                            targetSelect.appendChild(option);
+                        }
+                    {% endfor %}
+                }
+                if (changingOp == "place") {
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Select Place';
+                    targetSelect.appendChild(defaultOption);
+
+                    {% for place in places %}
+                        if ("{{ place.floor_name.id }}" === selectedSource || selectedSource === "") {
+                            var option = document.createElement('option');
+                            option.value = "{{ place.title }}";
+                            option.innerHTML = "{{ place }}";
+                            targetSelect.appendChild(option);
+                        }
+                    {% endfor %}
+                }
+            }
+
+
+            document.getElementById('floorNavigateForm').addEventListener('submit', function() {
+            // Get the selected value of the from_floor dropdown
+                var fromFloorSelect = document.getElementById('from-floor');
+                var selectedFromFloor = fromFloorSelect.options[fromFloorSelect.selectedIndex].value;
+
+                // Update the value of the hidden input with the selected from_floor value
+                document.getElementById('current_floor').value = selectedFromFloor;
+                console.log(document.getElementById('current_floor').value)
+            });
+        });
+        
+    </script>
 
 {% endblock  %}

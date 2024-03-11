@@ -40,6 +40,15 @@
       </div>
     </div>
 
+    <div class="my-3 row container justify-content-center">
+      <div class="col-lg-3 col-5 mx-2">
+        <h4><b>Current Floor</b>: <span class="text-primary">{{request.GET.current_floor}}</span></h4>
+      </div>
+      <div class="col-lg-3 col-5 mx-2">
+        <h4><b>Destination Floor</b>: <span class="text-primary">{{request.GET.to_floor}}</span></h4>
+      </div>
+    </div>
+
     <div class="text-center mt-5 mb-4 mb-md-0">
       <form action="floor-navigate" method='get' id="qrform">
         <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      

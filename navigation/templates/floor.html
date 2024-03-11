@@ -41,7 +41,7 @@
     </div>
 
     <div class="text-center mt-5 mb-4 mb-md-0">
-      <form action="floor-navigate" method='get'>
+      <form action="floor-navigate" method='get' id="qrform">
         <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      
         <input type="hidden" id="building" name="building" value="{{ request.GET.building }}">
         <input type="hidden" id="from-floor" name="from_floor" value="{{ request.GET.from_floor }}">

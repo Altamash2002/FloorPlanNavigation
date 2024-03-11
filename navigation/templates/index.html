@@ -62,18 +62,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             updateOptions("BuildingSelect", "from-floor", "floor");
-            updateOptions("BuildingSelect", "to-floor", "floor");
-            updateOptions("to-floor", "to-place", "place");
             updateOptions("from-floor", "from-place", "place");
 
             document.getElementById("BuildingSelect").addEventListener("change", function() {
                 updateOptions("BuildingSelect", "from-floor", "floor");
-                updateOptions("BuildingSelect", "to-floor", "floor");
-            });
-
-
-            document.getElementById("to-floor").addEventListener("change", function() {
-                updateOptions("to-floor", "to-place", "place");
             });
 
             document.getElementById("from-floor").addEventListener("change", function() {

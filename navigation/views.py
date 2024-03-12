@@ -60,8 +60,11 @@ def navigate(request):
         to = to_place
 
     floor_map = get_object_or_404(Floor,id=from_floor_id).svg
+    
+    current_floor = get_object_or_404(Floor,id=current_floor_id)
+    destination_floor = get_object_or_404(Floor,id=to_floor_id)
 
-    return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map})
+    return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map, "currentFloor": current_floor, "destinationFloor": destination_floor})
 
 def register(request):
     if request.session.has_key('login'):

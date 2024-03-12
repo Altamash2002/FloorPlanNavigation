@@ -211,12 +211,12 @@
         
             if (Math.abs(dx) > Math.abs(dy)) {
                 return {
-                    direction: dx > 0 ? 'Go right <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-right"></i></span>' : 'Go left <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-left"></i></span>',
+                    direction: dx > 0 ? 'Go right <span class="text-danger" style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-right"></i></span>' : 'Go left <span class="text-danger" style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-left"></i></span>',
                     steps: steps
                 };
             } else {
                 return {
-                    direction: dy > 0 ? 'Go down <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-down"></i></span>' : 'Go up <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-up"></i></span>',
+                    direction: dy > 0 ? 'Go down <span class="text-danger" style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-down"></i></span>' : 'Go up <span class="text-danger" style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-up"></i></span>',
                     steps: steps
                 };
             }
@@ -240,7 +240,7 @@
                     totalSteps += result.steps;
                 } else {
                     // Change in direction, add accumulated steps to directions array
-                    directions.push(`<h3>${currentDirection} - <span style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
+                    directions.push(`<h3>${currentDirection} - <span class="text-primary" style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
                     
                     // Reset accumulated steps for the new direction
                     totalSteps = result.steps;
@@ -250,7 +250,7 @@
         
             // Add the last accumulated direction
             if (currentDirection !== null) {
-                directions.push(`<h3>${currentDirection} - <span style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
+                directions.push(`<h3>${currentDirection} - <span class="text-primary" style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
             }
         
             if (!directions.length) {

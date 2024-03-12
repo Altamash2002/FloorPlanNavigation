@@ -202,6 +202,68 @@
         }
         console.log(linesToDraw) // all points of the path
 
+        function getDirectionAndSteps(path) {
+            const dx = path.x2 - path.x1;
+            const dy = path.y2 - path.y1;
+        
+            const distance = Math.sqrt(dx ** 2 + dy ** 2);
+            const steps = Math.round(distance / stepSize); // You can adjust stepSize as needed
+        
+            if (Math.abs(dx) > Math.abs(dy)) {
+                return {
+                    direction: dx > 0 ? 'Go right <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-right"></i></span>' : 'Go left <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-left"></i></span>',
+                    steps: steps
+                };
+            } else {
+                return {
+                    direction: dy > 0 ? 'Go down <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-down"></i></span>' : 'Go up <span style="font-size:25px; font-weight:bold;"><i class="bi bi-arrow-up"></i></span>',
+                    steps: steps
+                };
+            }
+        }
+        
+        function analyzePathAndShowDirections() {
+            let directions = [];
+            let currentDirection = null;
+            let totalSteps = 0;
+        
+            for (let path = 0; path < linesToDraw.length; path++) {
+                const result = getDirectionAndSteps(linesToDraw[path]);
+        
+                if (currentDirection === null) {
+                    // First direction encountered
+                    currentDirection = result.direction;
+                }
+        
+                if (result.direction === currentDirection) {
+                    // Accumulate steps for the same direction
+                    totalSteps += result.steps;
+                } else {
+                    // Change in direction, add accumulated steps to directions array
+                    directions.push(`<h3>${currentDirection} - <span style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
+                    
+                    // Reset accumulated steps for the new direction
+                    totalSteps = result.steps;
+                    currentDirection = result.direction;
+                }
+            }
+        
+            // Add the last accumulated direction
+            if (currentDirection !== null) {
+                directions.push(`<h3>${currentDirection} - <span style="font-size:20px;">(${totalSteps} steps approx.)</span> </h3>`);
+            }
+        
+            if (!directions.length) {
+                $('#directionsBody').html('<h3> You Are at the Destination </h3>');
+            } else {
+                // Update modal content
+                $('#directionsBody').html(directions);
+            }
+        }
+                
+        // Set a reasonable step size for your calculations
+        const stepSize = 10;
+
         let pathData = '';
 
         // Function to create a <path> element and append it to the SVG
@@ -249,21 +311,24 @@
             // Access the camera and start scanning
             const video = document.createElement('video');
             video.style.width = '100%';
-            video.style.height = '80%';
+            video.style.height = '100%';
             video.style.position = 'fixed';
-            video.style.top = '5';
+            video.style.top = '0';
             video.style.left = '0';
             document.body.appendChild(video);
 
             scanner = new Instascan.Scanner({ video: video });
             scanner.addListener('scan', function(content) {
-                // This function is called when a QR code is scanned
-                
+                // This function is called when a QR code is 
+                if (typeof content != 'object'){
+                    showAlert("Oops! ", " Please scan the correct QR code.",10000);
+                }
                 // logic of new QR is here
                 const scannedLocation = JSON.parse(content);
                 console.log(scannedLocation);
 
-                highlightLocation(scannedLocation.room,0.8,1,'red'); // You can use the scanned content here
+                //highlightLocation(scannedLocation.room,0.8,1,'red'); // You can use the scanned content here
+                
                 
                 var currentFloorInput = document.getElementById('current_floor');
                 var currentFloorValue = scannedLocation.floor;
@@ -343,9 +408,7 @@
                     location.style.display = 'none'; // Hide the circle after the animation
                 }, 5000000);
             }
-            else{
-                showAlert("Oops! ", " Please scan the correct QR code.",10000);
-            }
+
         }
 
         function highlightLocationDes(locationId, initialRadius, maxRadius, color) {
@@ -376,9 +439,7 @@
                     location.style.display = 'none'; // Hide the circle after the animation
                 }, 5000000);
             }
-            else{
-                showAlert("Oops! ", " Please scan the correct QR code.",10000);
-            }
+
         }
 
         // Function to update the shortest path based on the scanned location

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +7,26 @@
     <title>college SVG</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5"></script>
+
+    <!-- links for QR code -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+    <!-- jQuery link -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+
     <!-- bootstrap link -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-   <!-- links for QR code -->
-   <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-   <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <!-- bootstrap icons link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-   <!-- jQuery link -->
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-   <!-- bootstrap icons -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Template Main CSS File -->
+    <link href="/static/assets/css/style.css" rel="stylesheet">
 
     <style>
         circle{
@@ -25,7 +34,7 @@
         }
         #expandableButton {
           position: fixed;
-          top: 20px;
+          top: 80px;
           right: 0px;
           z-index: 1000; 
           transition: all 0.3s ease;
@@ -33,76 +42,103 @@
     </style>
 </head>
 <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center py-1">
+      <div class="container d-flex align-items-center">
 
-    <div class="text-center my-5">
-        <button onclick="startCamera()">Start Camera</button>
-    </div>
+      <div class="logo me-auto">
+          <div><a href="{% url "home" %}"><img src="/static/assets/img/logo.png" alt="logo" class="img-fluid"></a></div>
+      </div>
 
-    <div class="my-5 row container-fluid justify-content-center">
-      <div class="col-lg-2 col-md-3 col-5 mx-2">
-        <div class="d-flex align-items-center">
-          <div class="rounded-circle" style="width: 15px; height: 15px; background-color: red;"></div>
-          <span class="ms-2">Your Position</span>
+      <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+          <li><a class="nav-link scrollto" href="/#what-we-do">Features</a></li>
+          <li><a class="nav-link scrollto" href="/#about">About</a></li>
+          <li><a class="nav-link" href="admin/">Admin</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <div class="header-social-links d-flex align-items-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+      </div>
+
+      </div>
+    </header><!-- End Header -->
+    <div>
+      <div class="text-center my-5">
+          <button onclick="startCamera()">Start Camera</button>
+      </div>
+
+      <div class="my-5 row container-fluid justify-content-center">
+        <div class="col-lg-2 col-md-3 col-5 mx-2">
+          <div class="d-flex align-items-center">
+            <div class="rounded-circle" style="width: 15px; height: 15px; background-color: red;"></div>
+            <span class="ms-2">Your Position</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-5 mx-2">
+          <div class="d-flex align-items-center">
+            <div class="rounded-circle" style="width: 15px; height: 15px; background-color: green;"></div>
+            <span class="ms-2">Destination</span>
+          </div>
         </div>
       </div>
-      <div class="col-lg-2 col-md-3 col-5 mx-2">
-        <div class="d-flex align-items-center">
-          <div class="rounded-circle" style="width: 15px; height: 15px; background-color: green;"></div>
-          <span class="ms-2">Destination</span>
+
+
+      <div class="my-3 row container-fluid justify-content-center">
+        <div class="col-12 text-center">
+          <h4><b>Building</b>: <span class="text-primary">{{currentFloor.building}}</span></h4>
+        </div>
+        <div class="col-lg-3 col-5">
+          <h4><b>Current Floor</b>: <span class="text-primary">{{currentFloor.name}}</span></h4>
+        </div>
+        <div class="col-lg-3 col-5">
+          <h4><b>Destination Floor</b>: <span class="text-primary">{{destinationFloor.name}}</span></h4>
         </div>
       </div>
-    </div>
 
+      <button id="expandableButton" type="button" class="btn btn-primary mt-3" data-bs-toggle="offcanvas" data-bs-target="#directionsOffcanvas" aria-controls="directionsOffcanvas" onclick="analyzePathAndShowDirections()">Directions</button>
 
-    <div class="my-3 row container-fluid justify-content-center">
-      <div class="col-12 text-center">
-        <h4><b>Building</b>: <span class="text-primary">{{currentFloor.building}}</span></h4>
+      <!-- Offcanvas Sidebar from Bottom -->
+      <div class="offcanvas offcanvas-bottom container-fluid h-auto" tabindex="-1" id="directionsOffcanvas" aria-labelledby="directionsOffcanvasLabel">
+          <div class="offcanvas-header">
+              <h1 class="offcanvas-title text-danger" id="directionsOffcanvasLabel">Directions</h1>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body pb-5" id="directionsBody">
+              <!-- Directions content will be displayed here -->
+          </div>
       </div>
-      <div class="col-lg-3 col-5">
-        <h4><b>Current Floor</b>: <span class="text-primary">{{currentFloor.name}}</span></h4>
+
+      <div class="text-center mt-5 mb-4 mb-md-0">
+        <form action="floor-navigate" method='get' id="qrform">
+          <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      
+          <input type="hidden" id="building" name="building" value="{{ request.GET.building }}">
+          <input type="hidden" id="from-floor" name="from_floor" value="{{ request.GET.from_floor }}">
+          <input type="hidden" id="from-place" name="from_place" value="{{ request.GET.from_place }}">
+          <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
+          <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
+          
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor < request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="nextButton">Next Floor</button>
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor > request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="preButton">Next Floor</button>
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor</button>
+
+        </form>
       </div>
-      <div class="col-lg-3 col-5">
-        <h4><b>Destination Floor</b>: <span class="text-primary">{{destinationFloor.name}}</span></h4>
-      </div>
+
+      {% block floor %}{% endblock  %}
+
+      {% block script %}{% endblock  %}
     </div>
 
-    <button id="expandableButton" type="button" class="btn btn-primary mt-3" data-bs-toggle="offcanvas" data-bs-target="#directionsOffcanvas" aria-controls="directionsOffcanvas" onclick="analyzePathAndShowDirections()">Directions</button>
-
-    <!-- Offcanvas Sidebar from Bottom -->
-    <div class="offcanvas offcanvas-bottom container-fluid h-auto" tabindex="-1" id="directionsOffcanvas" aria-labelledby="directionsOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h1 class="offcanvas-title text-danger" id="directionsOffcanvasLabel">Directions</h1>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body pb-5" id="directionsBody">
-            <!-- Directions content will be displayed here -->
-        </div>
-    </div>
-
-    <div class="text-center mt-5 mb-4 mb-md-0">
-      <form action="floor-navigate" method='get' id="qrform">
-        <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      
-        <input type="hidden" id="building" name="building" value="{{ request.GET.building }}">
-        <input type="hidden" id="from-floor" name="from_floor" value="{{ request.GET.from_floor }}">
-        <input type="hidden" id="from-place" name="from_place" value="{{ request.GET.from_place }}">
-        <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
-        <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
-        
-        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor < request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="nextButton">Next Floor</button>
-        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor > request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="preButton">Next Floor</button>
-        <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor</button>
-
-      </form>
-    </div>
-
-    {% block floor %}{% endblock  %}
-
-    {% block script %}{% endblock  %}
-
-    <!-- bootstrap js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
+    <!-- Template Main JS File -->
+    <script src="/static/assets/js/main.js"></script>
+    <!-- bootstrap link js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 </html>

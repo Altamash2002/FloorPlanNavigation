@@ -3,94 +3,96 @@
 {% block main %}
 
 
-<h1 class="text-center my-5">Indoor Navigation App</h1>
+<div>
+    <h1 class="text-center my-5">Indoor Navigation App</h1>
 
-<nav class="container">
-    <div class="nav nav-pills row justify-content-center" id="nav-tab" role="tablist">
-        <button class="nav-link active col-6 col-md-5" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Search Teacher</button>
-        <button class="nav-link col-6 col-md-5" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Search Place Directly</button>
-    </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-        <div class="container my-5">
-            <!-- try -->
-            <form action="choose" method="post" class="bg-white p-5 shadow rounded" id="myForm">
-                {% csrf_token %}
-                <h2 class="mb-4">Details</h2>
-            
-                <div class="mb-3">
-                    <h6 class="mb-3">Department :</h6>
-                    <select class='form-select iselect2' name="department" id="departmentSelect">
-                        <option value="" selected disabled>Select Department</option>
-                        {% for department in departments %}
-                            <option value="{{ department.id }}">{{ department.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            
-                <div class="mb-3">
-                    <h6 class="mb-3">Teacher to Meet :</h6>
-                    <select class='form-select iselect2' name="teacher" id="teacherSelect" required>
-                        {% for teacher in teachers %}
-                            <option value="{{ teacher.id }}" data-department="{{ teacher.department.id }}">{{ teacher }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>            
+    <nav class="container">
+        <div class="nav nav-pills row justify-content-center" id="nav-tab" role="tablist">
+            <button class="nav-link active col-6 col-md-5" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Search Teacher</button>
+            <button class="nav-link col-6 col-md-5" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Search Place Directly</button>
         </div>
-    </div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-        <div class="container my-5">
-            <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get' id="floorNavigateForm">
-                <h2 class="mb-4">Search Place</h2>
-                <input type="hidden" id="current_floor" name="current_floor" value="">
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <div class="container my-5">
+                <!-- try -->
+                <form action="choose" method="post" class="bg-white p-5 shadow rounded" id="myForm">
+                    {% csrf_token %}
+                    <h2 class="mb-4">Details</h2>
+                
+                    <div class="mb-3">
+                        <h6 class="mb-3">Department :</h6>
+                        <select class='form-select iselect2' name="department" id="departmentSelect">
+                            <option value="" selected disabled>Select Department</option>
+                            {% for department in departments %}
+                                <option value="{{ department.id }}">{{ department.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                
+                    <div class="mb-3">
+                        <h6 class="mb-3">Teacher to Meet :</h6>
+                        <select class='form-select iselect2' name="teacher" id="teacherSelect" required>
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}" data-department="{{ teacher.department.id }}">{{ teacher }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>            
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <div class="container my-5">
+                <form class="bg-white shadow rounded p-5" action="floor-navigate" method='get' id="floorNavigateForm">
+                    <h2 class="mb-4">Search Place</h2>
+                    <input type="hidden" id="current_floor" name="current_floor" value="">
 
-                <div class="form-group">
-                    <h6 class="mb-3">Building:</h6>
-                    <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
-                        {% for building in buildings %}
-                            <option value="{{ building.id }}">{{ building.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <h6 class="mb-3">Building:</h6>
+                        <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
+                            {% for building in buildings %}
+                                <option value="{{ building.id }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <h6 class="mb-3">From:</h6>
-                    <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
-                        <option value="" selected disabled>Select Floor</option>
-                        {% for floor in floors %}
-                        <option value="{{floor.id}}">{{floor}}</option>
-                        {% endfor %}
-                    </select>
-                    <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
-                        <option value="" selected disabled>Select place</option>
-                        {% for place in places %}
-                        <option value="{{place.title}}">{{place}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <h6 class="mb-3">To:</h6>
-                    <select class='form-select iselect2 my-3' id="to-floor" name="to_floor" required>
-                        <option value="" selected disabled>Select Floor</option>
-                        {% for floor in floors %}
-                        <option value="{{floor.id}}">{{floor}}</option>
-                        {% endfor %}
-                    </select>
-                    <select class='form-select iselect2 my-3' id="to-place" name="to_place" required>
-                        <option value="" selected disabled>Select place</option>
-                        {% for place in places %}
-                        <option value="{{place.title}}">{{place}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-    
-                <input class='btn btn-primary btn2' type="submit" value="Search">
-            </form>
+                    <div class="form-group">
+                        <h6 class="mb-3">From:</h6>
+                        <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
+                            <option value="" selected disabled>Select Floor</option>
+                            {% for floor in floors %}
+                            <option value="{{floor.id}}">{{floor}}</option>
+                            {% endfor %}
+                        </select>
+                        <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
+                            <option value="" selected disabled>Select place</option>
+                            {% for place in places %}
+                            <option value="{{place.title}}">{{place}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+        
+                    <div class="form-group">
+                        <h6 class="mb-3">To:</h6>
+                        <select class='form-select iselect2 my-3' id="to-floor" name="to_floor" required>
+                            <option value="" selected disabled>Select Floor</option>
+                            {% for floor in floors %}
+                            <option value="{{floor.id}}">{{floor}}</option>
+                            {% endfor %}
+                        </select>
+                        <select class='form-select iselect2 my-3' id="to-place" name="to_place" required>
+                            <option value="" selected disabled>Select place</option>
+                            {% for place in places %}
+                            <option value="{{place.title}}">{{place}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+        
+                    <input class='btn btn-primary btn2' type="submit" value="Search">
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -190,5 +192,21 @@
         });
     });
 </script>
+
+<!-- ======= Footer ======= -->
+<footer id="footer mt-5" style="box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);">
+
+    <div class="px-5 py-3">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>LTCE Indoor Navigation</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by <a href="#">LTCE Students</a>
+        </div>
+      </div>
+    </div>
+</footer><!-- End Footer -->
 
 {% endblock  %}

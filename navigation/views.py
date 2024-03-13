@@ -13,7 +13,7 @@ def detail(request):
     buildings = Building.objects.all()
     return render(request, "detail.html", {"teachers":teachers, "departments":departments, "places":places, "floors":floors, "buildings":buildings})
 
-def home(request):
+def index(request):
     d_building = None
     d_floor = None
     d_place = None
@@ -81,3 +81,6 @@ def register(request):
         form = VisitorForm()
 
     return render(request, 'register.html', {'form': form})
+
+def home(request):
+    return render(request, 'landing.html')

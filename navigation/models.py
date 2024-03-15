@@ -21,6 +21,7 @@ class Floor(models.Model):
     svg = models.TextField(null = True, blank=True)
     building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
     department = models.ManyToManyField(Department, blank=True)
+    floor_no = models.CharField(max_length=2, null=True)
 
     def __str__(self):
         return self.name + f"({self.building})"

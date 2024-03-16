@@ -321,16 +321,38 @@
         // code to scan qr code
         
         let scanner;
+        let video;
+        let closeButton;
         
         function startCamera() {
+            // Create a container for video and close button
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.bottom = '0';
+            container.style.left = '0';
+            container.style.right = '0'; // Set right to 0 to ensure the div spans the entire width
+            container.style.width = 'fit-content';
+            container.style.margin = '0 auto'; // Horizontally center the div
+
             // Access the camera and start scanning
             const video = document.createElement('video');
             video.style.width = '100%';
             video.style.height = '60%';
-            video.style.position = 'fixed';
-            video.style.bottom = '0';
-            video.style.left = '0';
-            document.body.appendChild(video);
+            container.appendChild(video);
+
+            // Create and position close button
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✖'; // Cross symbol
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '10px'; // Adjust top position as needed
+            closeButton.style.right = '10px'; // Adjust right position as needed
+            container.appendChild(closeButton);
+
+            // Append container to the body
+            document.body.appendChild(container);
+
+            // Event listener for close button
+            closeButton.addEventListener('click', closeCamera);
 
             scanner = new Instascan.Scanner({ video: video });
             scanner.addListener('scan', function(content) {
@@ -384,6 +406,18 @@
             }).catch(function (e) {
                 console.error(e);
             });
+        }
+
+        function closeCamera() {
+            if (scanner) {
+                scanner.stop();
+            }
+            if (video) {
+                video.remove();
+            }
+            if (closeButton) {
+                closeButton.remove();
+            }
         }
 
 

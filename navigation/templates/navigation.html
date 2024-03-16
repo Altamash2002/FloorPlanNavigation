@@ -136,7 +136,8 @@
             proom12: ['pc8'],
             proom13: ['pc9'],
             proom14: ['pc10'],
-            proom15: ['pc11'],
+            proom15: ['pc11','proom16'],
+            proom16: ['proom15'],
             pc1: ['proom1','proom9','pc2'],
             pc2: ['proom2','proom10','pc1','pc3'],
             pc3: ['proom3','pc2','pc4'],
@@ -553,6 +554,21 @@
         //         loop: true
         //     });
         // }
+        //handle zooming SVG
+        let isZoomed = false;
+        document.getElementById('svg-container').addEventListener('dblclick', function(event) {
+            // Increase or decrease the width of the SVG based on the direction of scroll (zoom in/out)
+            const svg = document.getElementById('svg-image');
+            if (isZoomed) {
+            svg.setAttribute('width','100%');
+            }
+            else{
+            svg.setAttribute('width','150%');
+            }
+            isZoomed = !isZoomed;
+
+            event.preventDefault(); // Prevent page scroll
+        });
 
     </script>
 {% endblock  %}

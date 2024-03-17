@@ -324,10 +324,11 @@
         let scanner;
         let video;
         let closeButton;
+        let container;
         
         function startCamera() {
             // Create a container for video and close button
-            const container = document.createElement('div');
+            container = document.createElement('div');
             container.style.position = 'fixed';
             container.style.bottom = '0';
             container.style.left = '0';
@@ -338,7 +339,7 @@
             // Access the camera and start scanning
             const video = document.createElement('video');
             video.style.width = '100%';
-            video.style.height = '50%';
+            video.style.height = '50vh';
             container.appendChild(video);
 
             // Create and position close button
@@ -413,11 +414,8 @@
             if (scanner) {
                 scanner.stop();
             }
-            if (video) {
-                video.remove();
-            }
-            if (closeButton) {
-                closeButton.remove();
+            if(container){
+                document.body.removeChild(container);
             }
         }
 
@@ -563,7 +561,7 @@
             svg.setAttribute('width','100%');
             }
             else{
-            svg.setAttribute('width','150%');
+            svg.setAttribute('width','200%');
             }
             isZoomed = !isZoomed;
 

@@ -30,7 +30,7 @@
 
     <style>
         circle{
-            display: none;
+            display: inline;
         }
         #expandableButton {
           position: fixed;
@@ -128,6 +128,12 @@
           <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor</button>
 
         </form>
+      </div>
+      <div class="text-end pe-5">        
+        <div class="btn-group zoom-btn" role="group" aria-label="Zoom buttons">
+          <button type="button" class="btn btn-primary" id="zoom-out-btn">-</button>
+          <button type="button" class="btn btn-primary" id="zoom-in-btn">+</button>
+        </div>
       </div>
 
       {% block floor %}{% endblock  %}

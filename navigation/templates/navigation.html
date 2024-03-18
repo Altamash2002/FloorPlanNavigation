@@ -122,44 +122,165 @@
 
             return path;
         }
+        let graph={};
+        let currentFloorId = {{currentFloor.id}}
+        if (currentFloorId == 5 || currentFloorId == 6) {
+            graph = {
+                proom1: ['pc1'],
+                proom2: ['pc2'],
+                proom3: ['pc3'],
+                proom6: ['pc9'],
+                proom7: ['pc10'],
+                proom8: ['pc11'],
+                proom9: ['pc1'],
+                proom10: ['pc2'],
+                proom11: ['pc4'],
+                proom12: ['pc8'],
+                proom13: ['pc9'],
+                proom14: ['pc10'],
+                proom15: ['pc11','proom16'],
+                proom16: ['proom15'],
+                pc1: ['proom1','proom9','pc2'],
+                pc2: ['proom2','proom10','pc1','pc3'],
+                pc3: ['proom3','pc2','pc4'],
+                pc4: ['pc3','proom11','pc5'],
+                pc5: ['pc4','pc6','pc13'],
+                pc6: ['pc5','pc7','pc17'],
+                pc7: ['pc6','pc8','pc20'],
+                pc8: ['pc7','pc9','proom12'],
+                pc9: ['proom6','proom13','pc8','pc10'],
+                pc10: ['proom7','proom14','pc9','pc11'],
+                pc11: ['proom8','proom15','pc10'],
+                pc13: ['pc5','pc14','pc15'],
+                pc14: ['pc13','pc16','pc17'],
+                pc15: ['pc13'],
+                pc16: ['pc14'],
+                pc17: ['pc14','pc18','pc6'],
+                pc18: ['pc17','pc19','pc20'],
+                pc19: ['pc18'],
+                pc20: ['pc21','pc7','pc18'],
+                pc21: ['pc20'],
+                // ... add more rooms and their neighbors ...
+            };
+        }
+        else if (currentFloorId == 3 || currentFloorId == 4) {
+            graph = {
+                proom1: ['pc1'],
+                proom2: ['pc2'],
+                proom3: ['pc3'],
+                proom6: ['pc9'],
+                proom7: ['pc10'],
+                proom8: ['pc11'],
+                proom9: ['pc1'],
+                proom10: ['pc2'],
+                proom11: ['pc4'],
+                proom12: ['pc8'],
+                proom14: ['pc10'],
+                proom15: ['pc11','proom16'],
+                proom16: ['proom15'],
+                pc1: ['proom1','proom9','pc2'],
+                pc2: ['proom2','proom10','pc1','pc3'],
+                pc3: ['proom3','pc2','pc4'],
+                pc4: ['pc3','proom11','pc5'],
+                pc5: ['pc4','pc6','pc13'],
+                pc6: ['pc5','pc7','pc17'],
+                pc7: ['pc6','pc8','pc20'],
+                pc8: ['pc7','pc9','proom12'],
+                pc9: ['proom6','pc8','pc10'],
+                pc10: ['proom7','proom14','pc9','pc11'],
+                pc11: ['proom8','proom15','pc10'],
+                pc13: ['pc5','pc14','pc15'],
+                pc14: ['pc13','pc16','pc17'],
+                pc15: ['pc13'],
+                pc16: ['pc14'],
+                pc17: ['pc14','pc18','pc6'],
+                pc18: ['pc17','pc19','pc20'],
+                pc19: ['pc18'],
+                pc20: ['pc21','pc7','pc18'],
+                pc21: ['pc20'],
+                // ... add more rooms and their neighbors ...
+            };
+        }
+        else if (currentFloorId == 2){
+            graph = {
+                proom1: ['pc1'],
+                proom2: ['pc2'],
+                proom3: ['pc3'],
+                proom6: ['pc9'],
+                proom7: ['pc10'],
+                proom8: ['pc11'],
+                proom9: ['pc1'],
+                proom10: ['pc2'],
+                proom11: ['pc4'],
+                proom12: ['pc8'],
+                proom13: ['pc9'],
+                proom14: ['pc10'],
+                proom15: ['pc11','proom16'],
+                proom16: ['proom15'],
+                pc1: ['proom1','proom9','pc2'],
+                pc2: ['proom2','proom10','pc1','pc3'],
+                pc3: ['proom3','pc2','pc4'],
+                pc4: ['pc3','proom11','pc5'],
+                pc5: ['pc4','pc6','pc13'],
+                pc6: ['pc5','pc7','pc16','pc17'],
+                pc7: ['pc6','pc8','pc20'],
+                pc8: ['pc7','pc9','proom12'],
+                pc9: ['proom6','proom13','pc8','pc10'],
+                pc10: ['proom7','proom14','pc9','pc11'],
+                pc11: ['proom8','proom15','pc10'],
+                pc13: ['pc5','pc14','pc15'],
+                pc14: ['pc13','pc17'],
+                pc15: ['pc13'],
+                pc16: ['pc6'],
+                pc17: ['pc14','pc18','pc6'],
+                pc18: ['pc17','pc19','pc20'],
+                pc19: ['pc18'],
+                pc20: ['pc21','pc7','pc18'],
+                pc21: ['pc20'],
+                // ... add more rooms and their neighbors ...
+            };
+        }
+        else{
+            graph = {
+                proom1: ['pc1'],
+                proom2: ['pc2'],
+                proom3: ['pc3'],
+                proom6: ['pc9'],
+                proom7: ['pc10'],
+                proom8: ['pc11'],
+                proom9: ['pc1'],
+                proom10: ['pc2'],
+                proom11: ['pc4'],
+                proom12: ['pc8'],
+                proom13: ['pc9'],
+                proom14: ['pc10'],
+                proom15: ['pc11','proom16'],
+                proom16: ['proom15'],
+                pc1: ['proom1','proom9','pc2'],
+                pc2: ['proom2','proom10','pc1','pc3'],
+                pc3: ['proom3','pc2','pc4'],
+                pc4: ['pc3','proom11','pc5'],
+                pc5: ['pc4','pc6','pc13'],
+                pc6: ['pc5','pc7','pc17'],
+                pc7: ['pc6','pc8','pc20'],
+                pc8: ['pc7','pc9','proom12'],
+                pc9: ['proom6','proom13','pc8','pc10'],
+                pc10: ['proom7','proom14','pc9','pc11'],
+                pc11: ['proom8','proom15','pc10'],
+                pc13: ['pc5','pc14','pc15'],
+                pc14: ['pc13','pc16','pc17'],
+                pc15: ['pc13'],
+                pc16: ['pc14'],
+                pc17: ['pc14','pc18','pc6'],
+                pc18: ['pc17','pc19','pc20'],
+                pc19: ['pc18'],
+                pc20: ['pc21','pc7','pc18'],
+                pc21: ['pc20'],
+                // ... add more rooms and their neighbors ...
+            };
+        }
+        
 
-        const graph = {
-            proom1: ['pc1'],
-            proom2: ['pc2'],
-            proom3: ['pc3'],
-            proom6: ['pc9'],
-            proom7: ['pc10'],
-            proom8: ['pc11'],
-            proom9: ['pc1'],
-            proom10: ['pc2'],
-            proom11: ['pc4'],
-            proom12: ['pc8'],
-            proom13: ['pc9'],
-            proom14: ['pc10'],
-            proom15: ['pc11','proom16'],
-            proom16: ['proom15'],
-            pc1: ['proom1','proom9','pc2'],
-            pc2: ['proom2','proom10','pc1','pc3'],
-            pc3: ['proom3','pc2','pc4'],
-            pc4: ['pc3','proom11','pc5'],
-            pc5: ['pc4','pc6','pc13'],
-            pc6: ['pc5','pc7','pc17'],
-            pc7: ['pc6','pc8','pc20'],
-            pc8: ['pc7','pc9','proom12'],
-            pc9: ['proom6','proom13','pc8','pc10'],
-            pc10: ['proom7','proom14','pc9','pc11'],
-            pc11: ['proom8','proom15','pc10'],
-            pc13: ['pc5','pc14','pc15'],
-            pc14: ['pc13','pc16','pc17'],
-            pc15: ['pc13'],
-            pc16: ['pc14'],
-            pc17: ['pc14','pc18','pc6'],
-            pc18: ['pc17','pc19','pc20'],
-            pc19: ['pc18'],
-            pc20: ['pc21','pc7','pc18'],
-            pc21: ['pc20'],
-            // ... add more rooms and their neighbors ...
-        };
 
 
         const startRoom = "p" + "{{i}}";
@@ -553,19 +674,27 @@
         //     });
         // }
         //handle zooming SVG
-        let isZoomed = false;
-        document.getElementById('svg-container').addEventListener('dblclick', function(event) {
-            // Increase or decrease the width of the SVG based on the direction of scroll (zoom in/out)
+        let isZoomedIn = 260;
+        document.getElementById('zoom-in-btn').addEventListener('click', function(event) {
             const svg = document.getElementById('svg-image');
-            if (isZoomed) {
-            svg.setAttribute('width','100%');
+            let width = parseFloat(svg.getAttribute('width'))
+            // Increase or decrease the width of the SVG based on the direction of scroll (zoom in/out)
+            
+            if (width != isZoomedIn) {
+            let newWidth = width + 20;
+            svg.setAttribute('width',`${newWidth}%`)
             }
-            else{
-            svg.setAttribute('width','200%');
+        });
+        let isZoomedOut = 100;
+        document.getElementById('zoom-out-btn').addEventListener('click', function(event) {
+            const svg = document.getElementById('svg-image');
+            let width = parseFloat(svg.getAttribute('width'))
+            // Increase or decrease the width of the SVG based on the direction of scroll (zoom in/out)
+            
+            if (width != isZoomedOut) {
+            let newWidth = width - 20;
+            svg.setAttribute('width',`${newWidth}%`)
             }
-            isZoomed = !isZoomed;
-
-            event.preventDefault(); // Prevent page scroll
         });
 
     </script>

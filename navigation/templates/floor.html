@@ -30,7 +30,7 @@
 
     <style>
         circle{
-            display: inline;
+            display: none;
         }
         #expandableButton {
           position: fixed;
@@ -69,37 +69,65 @@
       </div>
     </header><!-- End Header -->
     <div>
-      <div class="text-center my-5">
-          <button onclick="startCamera()">Start Camera</button>
+      <!-- Scan QR Code Button -->
+      <div style="width: fit-content;" class="mx-auto">
+        <div class="btn btn-primary d-flex justify-content-center align-items-center my-5 px-5" onclick="startCamera()">
+          <h1 class="m-0"><i class="bi bi-camera-fill me-2"></i></h1>
+          <p class="m-0 fs-4">Scan QR Code</p>
+        </div>
       </div>
 
-      <div class="my-5 row container-fluid justify-content-center">
-        <div class="col-lg-2 col-md-3 col-5 mx-2">
-          <div class="d-flex align-items-center">
+      <!-- Position and Destination Indicators -->
+      <div class="my-5 row mx-auto container-fluid justify-content-center">
+        <div class="card col-md-5 mx-2">
+          <div class="card-body d-flex align-items-center">
             <div class="rounded-circle" style="width: 15px; height: 15px; background-color: red;"></div>
-            <span class="ms-2">Your Position</span>
+            <span style="font-weight: bolder;" class="ms-2">Your Position</span>
           </div>
         </div>
-        <div class="col-lg-2 col-md-3 col-5 mx-2">
-          <div class="d-flex align-items-center">
+        <div class="card col-md-5 mx-2">
+          <div class="card-body d-flex align-items-center">
             <div class="rounded-circle" style="width: 15px; height: 15px; background-color: green;"></div>
-            <span class="ms-2">Destination</span>
+            <span style="font-weight: bolder;" class="ms-2">Destination</span>
           </div>
         </div>
       </div>
 
-
-      <div class="my-3 row container-fluid justify-content-center">
-        <div class="col-12 text-center">
-          <h4><b>Building</b>: <span class="text-primary">{{currentFloor.building}}</span></h4>
+      <!-- Building Information -->
+      <div class="my-3 row mx-auto container-fluid justify-content-center">
+        <div class="col-lg-3 col-md-6 my-1">
+          <div class="card border-primary shadow">
+            <div style="background-color: rgb(190, 123, 123);" class="card-body text-light">
+              <h5 class="card-title text-center mb-4">Current Building</h5>
+              <h6 style="font-size: 29px; font-weight: bolder;" class="card-subtitle mb-2 text-center">{{currentFloor.building}}</h6>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-3 col-5">
-          <h4><b>Current Floor</b>: <span class="text-primary">{{currentFloor.name}}</span></h4>
+        <div class="col-lg-3 col-md-6 my-1">
+          <div class="card border-primary shadow">
+            <div style="background-color: rgb(190, 123, 123);" class="card-body text-light">
+              <h5 class="card-title text-center mb-4">Current Floor</h5>
+              <h6 style="font-size: 29px; font-weight: bolder;" class="card-subtitle mb-2 text-center">{{currentFloor.name}}</h6>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-3 col-5">
-          <h4><b>Destination Floor</b>: <span class="text-primary">{{destinationFloor.name}}</span></h4>
+        <div class="col-lg-3 col-md-6 my-1">
+          <div class="card border-primary shadow">
+            <div style="background-color: rgb(102, 146, 102);" class="card-body text-light">
+              <h5 class="card-title text-center mb-4">Destination Building</h5>
+              <h6 style="font-size: 29px; font-weight: bolder;" class="card-subtitle mb-2 text-center">{{currentFloor.building}}</h6>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="col-lg-3 col-md-6 my-1">
+          <div class="card border-primary shadow">
+            <div style="background-color: rgb(102, 146, 102);" class="card-body text-light">
+              <h5 class="card-title text-center mb-4">Destination Floor</h5>
+              <h6 style="font-size: 29px; font-weight: bolder;" class="card-subtitle mb-2 text-center">{{destinationFloor.name}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>      
 
       <button id="expandableButton" type="button" class="btn btn-primary mt-1" data-bs-toggle="offcanvas" data-bs-target="#directionsOffcanvas" aria-controls="directionsOffcanvas" onclick="analyzePathAndShowDirections()">Directions</button>
 
@@ -123,16 +151,16 @@
           <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
           <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
           
-          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor < request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="nextButton">Next Floor</button>
-          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor > request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="preButton">Next Floor</button>
-          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor</button>
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor < request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="nextButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor and request.GET.from_floor > request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-primary btn2' id="preButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
+          <button type="button" style="{% if request.GET.current_floor != request.GET.to_floor %} display:inline; {% else %} display:none; {% endif %}" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor <i style="font-size: 15px;" class="bi bi-house-door"></i></button>
 
         </form>
       </div>
       <div class="text-end pe-5">        
         <div class="btn-group zoom-btn" role="group" aria-label="Zoom buttons">
-          <button type="button" class="btn btn-primary" id="zoom-out-btn">-</button>
-          <button type="button" class="btn btn-primary" id="zoom-in-btn">+</button>
+          <button type="button" class="btn btn-secondary border py-0" id="zoom-out-btn"><i class="bi bi-dash-circle"></i></button>
+          <button type="button" class="btn btn-secondary border py-0" id="zoom-in-btn"><i class="bi bi-plus-circle"></i></button>
         </div>
       </div>
 

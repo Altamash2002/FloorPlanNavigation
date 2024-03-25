@@ -71,7 +71,7 @@
     <div>
       <!-- Scan QR Code Button -->
       <div style="width: fit-content;" class="mx-auto">
-        <div class="btn btn-primary d-flex justify-content-center align-items-center my-5 px-5" onclick="startCamera()">
+        <div class="btn btn-primary d-flex justify-content-center align-items-center my-5 px-5" id="qrbtn">
           <h1 class="m-0"><i class="bi bi-camera-fill me-2"></i></h1>
           <p class="m-0 fs-4">Scan QR Code</p>
         </div>
@@ -129,7 +129,7 @@
         </div>
       </div>      
 
-      <button id="expandableButton" type="button" class="btn btn-primary mt-1" data-bs-toggle="offcanvas" data-bs-target="#directionsOffcanvas" aria-controls="directionsOffcanvas" onclick="analyzePathAndShowDirections()">Directions</button>
+      <button id="expandableButton" type="button" class="btn btn-secondary mt-1" data-bs-toggle="offcanvas" data-bs-target="#directionsOffcanvas" aria-controls="directionsOffcanvas" onclick="analyzePathAndShowDirections()">Directions</button>
 
       <!-- Offcanvas Sidebar from Bottom -->
       <div class="offcanvas offcanvas-bottom container-fluid h-auto" tabindex="-1" id="directionsOffcanvas" aria-labelledby="directionsOffcanvasLabel">

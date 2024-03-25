@@ -23,6 +23,10 @@
 
 {% block script %}    
     <script>
+        document.getElementById("qrbtn").addEventListener("click", function() {
+            startCamera();
+        });
+
         // script to handle current_floor param
         document.getElementById('nextButton').addEventListener('click', function() {
             // Get the current_floor value from the hidden input
@@ -448,6 +452,8 @@
         let container;
         
         function startCamera() {
+            //disabling qr button 
+            document.getElementById('qrbtn').classList.add('disabled');
             // Create a container for video and close button
             container = document.createElement('div');
             container.style.position = 'fixed';
@@ -532,6 +538,7 @@
         }
 
         function closeCamera() {
+            document.getElementById('qrbtn').classList.remove('disabled');
             if (scanner) {
                 scanner.stop();
             }

@@ -244,6 +244,69 @@
                 // ... add more rooms and their neighbors ...
             };
         }
+        else if(currentFloorId == 1){
+            graph = {
+                proom1: ['pc6'],
+                proom2: ['pc3'],
+                proom3: ['pc11'],
+                proom4: ['pc12'],
+                proom5: ['pc10'],
+                proom6: ['pc18'],
+                proom7: ['pc19'],
+                proom8: ['pc23'],
+                proom9: ['pc24'],
+                proom10: ['pc27'],
+                proom11: ['pc28'],
+                proom12: ['pc29'],
+                proom13: ['pc30'],
+                proom14: ['pc31'],
+                proom15: ['pc32'],
+                pc1: ['pc2','pc6','pc16'],
+                pc2: ['pc1','pc015','pc3'],
+                pc3: ['pc2','proom2','pc5'],
+                pc4: ['pc39','pc5'],
+                pc5: ['pc3','pc4'],
+                pc6: ['pc1','pc7','proom1'],
+                pc7: ['pc6','pc8','pc11'],
+                pc8: ['pc7','pc9'],
+                pc9: ['pc10','pc8'],
+                pc10: ['proom5','pc14','pc9'],
+                pc11: ['pc13','pc7','proom3'],
+                pc12: ['pc13','proom4'],
+                pc13: ['pc36','pc11','pc12'],
+                pc14: ['pc17','pc25','pc10'],
+                pc15: ['pc015'],
+                pc015: ['pc15','pc2'],
+                pc16: ['pc1'],
+                pc17: ['pc14','pc26'],
+                pc18: ['pc17','pc19','proom6'],
+                pc19: ['pc21','pc18','proom7'],
+                pc20: ['pc22'],
+                pc21: ['pc22','pc19'],
+                pc22: ['pc20','pc21','pc23'],
+                pc23: ['pc24','pc22','proom8'],
+                pc24: ['pc23','pc27','proom9'],
+                pc25: ['pc14'],
+                pc26: ['pc17'],
+                pc27: ['pc28','pc24','proom10'],
+                pc28: ['pc29','pc27','proom11'],
+                pc29: ['pc30','pc28','proom12'],
+                pc30: ['pc31','pc29','proom13'],
+                pc31: ['pc32','pc30','proom14'],
+                pc32: ['pc33','pc31','proom15'],
+                pc33: ['pc32','pc35'],
+                pc34: ['pc35'],
+                pc35: ['pc36','pc34','pc33'],
+                pc36: ['pc37','pc35','pc13'],
+                pc37: ['pc38','pc36','pc40'],
+                pc38: ['pc39','pc41','pc37'],
+                pc39: ['pc4','pc38'],
+                pc40: ['pc37'],
+                pc41: ['pc38','pc43'],
+                pc42: ['pc43'],
+                pc43: ['pc42','pc41'],
+            };
+        }
         else{
             graph = {
                 proom1: ['pc1'],
@@ -582,7 +645,7 @@
                 setTimeout(() => {
                     clearInterval(intervalId);
                     location.style.display = 'none'; // Hide the circle after the animation
-                }, 5000000);
+                }, 50000000);
             }
 
         }
@@ -613,7 +676,7 @@
                 setTimeout(() => {
                     clearInterval(intervalId);
                     location.style.display = 'none'; // Hide the circle after the animation
-                }, 5000000);
+                }, 50000000);
             }
 
         }

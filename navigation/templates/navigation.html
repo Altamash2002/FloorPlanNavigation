@@ -107,13 +107,15 @@
                 var temp = {{request.GET.to_floor}};
                 currentFloorValue = parseInt(temp,10) || 0;
     
-                var tempBuilding = {{request.GET.toBuilding}};           
-                fromBuilding = parseInt(tempBuilding,10) || 0;
+
                 // Update the hidden input with the new current_floor value
     
                 currentFloorInput.value = currentFloorValue;
-                fromBuildingInput.value = fromBuilding;
-    
+                if ({{request.GET.to_floor}} != 0){
+                    var tempBuilding = {{request.GET.toBuilding}};           
+                    fromBuilding = parseInt(tempBuilding,10) || 0;
+                    fromBuildingInput.value = fromBuilding;
+                }
                 
                 console.log(currentFloorInput.value);
         

@@ -10,37 +10,40 @@
             <h2 class="mb-4">Search Destination </h2>
             <input type="hidden" id="current_floor" name="current_floor" value="">
 
-            <div class="form-group">
-                <h6 class="mb-3">Building:</h6>
-                <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
-                    <option value="{{ d_building.id }}" selected> Building - {{d_building.name}} </option>
-                </select>
-            </div>
+
 
             <div class="form-group">
-                <h6>From:</h6>
-                <select class='form-control iselect2 my-3' id="from-floor" name="from_floor" required>
-                    <option value="" selected disabled>Select Floor</option>
-                    {% for floor in floors %}
-                    <option value="{{floor.id}}">{{floor.name}}</option>
+                <h6 class="mb-3">From:</h6>
+                <select class='form-select iselect2 my-3' name="fromBuilding" id="fromBuildingSelect" required>
+                    {% for building in buildings %}
+                        <option value="{{ building.id }}">{{ building.name }}</option>
                     {% endfor %}
                 </select>
-                <select class='form-control iselect2 my-3' id="from-place" name="from_place" required>
+                <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
+                    <option value="" selected disabled>Select Floor</option>
+                    {% for floor in floors %}
+                    <option value="{{floor.floor_no}}">{{floor}}</option>
+                    {% endfor %}
+                </select>
+                <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
                     <option value="" selected disabled>Select place</option>
                     {% for place in places %}
-                    <option value="{{place.title}}">{{place.name}}</option>
+                    <option value="{{place.title}}">{{place}}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <h6>To:</h6>
+                <select class='form-select iselect2 my-3' name="toBuilding" id="toBuildingSelect" required>
+                    <option value="{{ d_building.id }}" selected> Building - {{d_building.name}} </option>
+                </select>
                 <select class='form-control iselect2 my-3' id="to-floor" name="to_floor" required>
                     {% if d_floor %}
-                        <option value="{{ d_floor.id }}" selected>{{d_floor.name}}</option>
+                        <option value="{{ d_floor.floor_no }}" selected>{{d_floor.name}}</option>
                     {% else %}
                         {% for floor in floors %}
-                        <option value="{{floor.id}}">{{floor.name}}</option>
+                        <option value="{{floor.floor_no}}">{{floor.name}}</option>
                         {% endfor %}
                     {% endif %}
                 </select>
@@ -59,65 +62,52 @@
         </form>
     </div>
 
-    <script>
+    <script>    
         document.addEventListener("DOMContentLoaded", function() {
-            updateOptions("BuildingSelect", "from-floor", "floor");
-            updateOptions("from-floor", "from-place", "place");
-
-            document.getElementById("BuildingSelect").addEventListener("change", function() {
-                updateOptions("BuildingSelect", "from-floor", "floor");
+            // Initial population of the second dropdown
+            updateOptions("fromBuildingSelect", "from-floor", "floor");
+            updateOptions("from-floor", "from-place", "place", "fromBuildingSelect");
+    
+            document.getElementById("fromBuildingSelect").addEventListener("change", function() {
+                updateOptions("fromBuildingSelect", "from-floor", "floor");
             });
-
+    
             document.getElementById("from-floor").addEventListener("change", function() {
-                updateOptions("from-floor", "from-place", "place");
+                updateOptions("from-floor", "from-place", "place", "fromBuildingSelect");
             });
-
-            function updateOptions(sourceId, targetId , changingOp) {
+    
+            function updateOptions(sourceId, targetId , changingOp, buildingOptional="building") {
                 var selectedSource = document.getElementById(sourceId).value;
                 var targetSelect = document.getElementById(targetId);
-
+    
                 // Clear existing options
                 targetSelect.innerHTML = '';
-
-                // Add options based on the selected source
-                if (changingOp == "teacher") {
-                    var defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.text = 'Select Teacher';
-                    targetSelect.appendChild(defaultOption);
-
-                    {% for teacher in teachers %}
-                        if ("{{ teacher.department.id }}" === selectedSource || selectedSource === "") {
-                            var option = document.createElement('option');
-                            option.value = "{{ teacher.id }}";
-                            option.innerHTML = "{{ teacher.name }}";
-                            targetSelect.appendChild(option);
-                        }
-                    {% endfor %}
-                }
+    
                 if (changingOp == "floor") {
                     var defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.text = 'Select Floor';
                     targetSelect.appendChild(defaultOption);
-
+    
                     {% for floor in floors %}
                         if ("{{ floor.building.id }}" === selectedSource || selectedSource === "") {
                             var option = document.createElement('option');
-                            option.value = "{{ floor.id }}";
+                            option.value = "{{ floor.floor_no }}";
                             option.innerHTML = "{{ floor }}";
                             targetSelect.appendChild(option);
                         }
                     {% endfor %}
                 }
                 if (changingOp == "place") {
+                    buildingOption = document.getElementById(buildingOptional).value
+    
                     var defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.text = 'Select Place';
                     targetSelect.appendChild(defaultOption);
-
+    
                     {% for place in places %}
-                        if ("{{ place.floor_name.id }}" === selectedSource || selectedSource === "") {
+                        if (("{{ place.floor_name.floor_no }}" === selectedSource && "{{ place.floor_name.building.id }}" === buildingOption  )|| selectedSource === "") {
                             var option = document.createElement('option');
                             option.value = "{{ place.title }}";
                             option.innerHTML = "{{ place }}";
@@ -126,19 +116,17 @@
                     {% endfor %}
                 }
             }
-
-
+            
             document.getElementById('floorNavigateForm').addEventListener('submit', function() {
-            // Get the selected value of the from_floor dropdown
+                // Get the selected value of the from_floor dropdown
                 var fromFloorSelect = document.getElementById('from-floor');
                 var selectedFromFloor = fromFloorSelect.options[fromFloorSelect.selectedIndex].value;
-
+    
                 // Update the value of the hidden input with the selected from_floor value
                 document.getElementById('current_floor').value = selectedFromFloor;
                 console.log(document.getElementById('current_floor').value)
             });
         });
-        
     </script>
 
     <!-- ======= Footer ======= -->

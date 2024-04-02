@@ -49,21 +49,18 @@
                     <h2 class="mb-4">Search Place</h2>
                     <input type="hidden" id="current_floor" name="current_floor" value="">
 
+                    
                     <div class="form-group">
-                        <h6 class="mb-3">Building:</h6>
-                        <select class='form-select iselect2 my-3' name="building" id="BuildingSelect" required>
+                        <h6 class="mb-3">From:</h6>
+                        <select class='form-select iselect2 my-3' name="fromBuilding" id="fromBuildingSelect" required>
                             {% for building in buildings %}
                                 <option value="{{ building.id }}">{{ building.name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-
-                    <div class="form-group">
-                        <h6 class="mb-3">From:</h6>
                         <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
                             <option value="" selected disabled>Select Floor</option>
                             {% for floor in floors %}
-                            <option value="{{floor.id}}">{{floor}}</option>
+                            <option value="{{floor.floor_no}}">{{floor}}</option>
                             {% endfor %}
                         </select>
                         <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
@@ -76,10 +73,15 @@
         
                     <div class="form-group">
                         <h6 class="mb-3">To:</h6>
+                        <select class='form-select iselect2 my-3' name="toBuilding" id="toBuildingSelect" required>
+                            {% for building in buildings %}
+                                <option value="{{ building.id }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
                         <select class='form-select iselect2 my-3' id="to-floor" name="to_floor" required>
                             <option value="" selected disabled>Select Floor</option>
                             {% for floor in floors %}
-                            <option value="{{floor.id}}">{{floor}}</option>
+                            <option value="{{floor.floor_no}}">{{floor}}</option>
                             {% endfor %}
                         </select>
                         <select class='form-select iselect2 my-3' id="to-place" name="to_place" required>
@@ -102,31 +104,34 @@
         const form = document.getElementById("myForm")
         // Initial population of the second dropdown
         updateOptions("departmentSelect", "teacherSelect", "teacher");
-        updateOptions("BuildingSelect", "from-floor", "floor");
-        updateOptions("BuildingSelect", "to-floor", "floor");
-        updateOptions("to-floor", "to-place", "place");
-        updateOptions("from-floor", "from-place", "place");
+        updateOptions("fromBuildingSelect", "from-floor", "floor");
+        updateOptions("toBuildingSelect", "to-floor", "floor");
+        updateOptions("to-floor", "to-place", "place", "toBuildingSelect");
+        updateOptions("from-floor", "from-place", "place", "fromBuildingSelect");
 
         // Event listener for the change in the first dropdown
         document.getElementById("departmentSelect").addEventListener("change", function() {
             updateOptions("departmentSelect", "teacherSelect", "teacher");
         });
 
-        document.getElementById("BuildingSelect").addEventListener("change", function() {
-            updateOptions("BuildingSelect", "from-floor", "floor");
-            updateOptions("BuildingSelect", "to-floor", "floor");
+        document.getElementById("fromBuildingSelect").addEventListener("change", function() {
+            updateOptions("fromBuildingSelect", "from-floor", "floor");
+        });
+
+        document.getElementById("toBuildingSelect").addEventListener("change", function() {
+            updateOptions("toBuildingSelect", "to-floor", "floor");
         });
 
 
         document.getElementById("to-floor").addEventListener("change", function() {
-            updateOptions("to-floor", "to-place", "place");
+            updateOptions("to-floor", "to-place", "place", "toBuildingSelect");
         });
 
         document.getElementById("from-floor").addEventListener("change", function() {
-            updateOptions("from-floor", "from-place", "place");
+            updateOptions("from-floor", "from-place", "place", "fromBuildingSelect");
         });
 
-        function updateOptions(sourceId, targetId , changingOp) {
+        function updateOptions(sourceId, targetId , changingOp, buildingOptional="building") {
             var selectedSource = document.getElementById(sourceId).value;
             var targetSelect = document.getElementById(targetId);
 
@@ -158,20 +163,22 @@
                 {% for floor in floors %}
                     if ("{{ floor.building.id }}" === selectedSource || selectedSource === "") {
                         var option = document.createElement('option');
-                        option.value = "{{ floor.id }}";
+                        option.value = "{{ floor.floor_no }}";
                         option.innerHTML = "{{ floor }}";
                         targetSelect.appendChild(option);
                     }
                 {% endfor %}
             }
             if (changingOp == "place") {
+                buildingOption = document.getElementById(buildingOptional).value
+
                 var defaultOption = document.createElement('option');
                 defaultOption.value = '';
                 defaultOption.text = 'Select Place';
                 targetSelect.appendChild(defaultOption);
 
                 {% for place in places %}
-                    if ("{{ place.floor_name.id }}" === selectedSource || selectedSource === "") {
+                    if (("{{ place.floor_name.floor_no }}" === selectedSource && "{{ place.floor_name.building.id }}" === buildingOption  )|| selectedSource === "") {
                         var option = document.createElement('option');
                         option.value = "{{ place.title }}";
                         option.innerHTML = "{{ place }}";

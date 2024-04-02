@@ -28,54 +28,99 @@
         });
 
         // script to handle current_floor param
-        document.getElementById('nextButton').addEventListener('click', function() {
+        if (document.getElementById('otherButton')) {
+            document.getElementById('otherButton').addEventListener('click', function() {
             // Get the current_floor value from the hidden input
-            var currentFloorInput = document.getElementById('current_floor');
-            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+                var currentFloorInput = document.getElementById('current_floor');
+                var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+                var fromBuildingInput = document.getElementById('fromBuilding');
+                var fromBuilding = parseInt({{request.GET.fromBuilding}}, 10) || 0;
+        
+                if (currentFloorValue == 0) {
+                    currentFloorValue++;
+                    if (fromBuilding === 2) {
+                        fromBuilding = 3;
+                    }
+                    else{
+                        fromBuilding = 2;
+                    }
+                }
+                else{
+                    currentFloorValue--;
+                }
+        
+                // Update the hidden input with the new current_floor value
+                currentFloorInput.value = currentFloorValue;
+                fromBuildingInput.value = fromBuilding;
+                console.log(currentFloorInput.value);
+        
+                // Submit the form
+                this.form.submit();
+            });
+        }
+        
+        if (document.getElementById('nextButton')) {
+            document.getElementById('nextButton').addEventListener('click', function() {
+                // Get the current_floor value from the hidden input
+                var currentFloorInput = document.getElementById('current_floor');
+                var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+        
+                // Increase the current_floor value by one
+                currentFloorValue++;
+        
+                // Update the hidden input with the new current_floor value
+                currentFloorInput.value = currentFloorValue;
+                console.log(currentFloorInput.value);
+        
+                // Submit the form
+                this.form.submit();
+            });
+        }
+        
+        if (document.getElementById('preButton')) {
+            document.getElementById('preButton').addEventListener('click', function() {
+                // Get the current_floor value from the hidden input
+                var currentFloorInput = document.getElementById('current_floor');
+                var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+        
+                // Increase the current_floor value by one
+                currentFloorValue--;
+        
+                // Update the hidden input with the new current_floor value
+                currentFloorInput.value = currentFloorValue;
+                console.log(currentFloorInput.value);
+        
+                // Submit the form
+                this.form.submit();
+            });
+        }
+        
+        if (document.getElementById('lastButton')){
+            document.getElementById('lastButton').addEventListener('click', function() {
+                // Get the current_floor value from the hidden input
+                var currentFloorInput = document.getElementById('current_floor');
+                var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+                var fromBuildingInput = document.getElementById('fromBuilding');
+                var fromBuilding = parseInt({{request.GET.fromBuilding}}, 10) || 0;
+        
+                // Increase the current_floor value by one
+                var temp = {{request.GET.to_floor}};
+                currentFloorValue = parseInt(temp,10) || 0;
     
-            // Increase the current_floor value by one
-            currentFloorValue++;
+                var tempBuilding = {{request.GET.toBuilding}};           
+                fromBuilding = parseInt(tempBuilding,10) || 0;
+                // Update the hidden input with the new current_floor value
     
-            // Update the hidden input with the new current_floor value
-            currentFloorInput.value = currentFloorValue;
-            console.log(currentFloorInput.value);
+                currentFloorInput.value = currentFloorValue;
+                fromBuildingInput.value = fromBuilding;
     
-            // Submit the form
-            this.form.submit();
-        });
-        document.getElementById('preButton').addEventListener('click', function() {
-            // Get the current_floor value from the hidden input
-            var currentFloorInput = document.getElementById('current_floor');
-            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
-    
-            // Increase the current_floor value by one
-            currentFloorValue--;
-    
-            // Update the hidden input with the new current_floor value
-            currentFloorInput.value = currentFloorValue;
-            console.log(currentFloorInput.value);
-    
-            // Submit the form
-            this.form.submit();
-        });
-        document.getElementById('lastButton').addEventListener('click', function() {
-            // Get the current_floor value from the hidden input
-            var currentFloorInput = document.getElementById('current_floor');
-            var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
-    
-            // Increase the current_floor value by one
-            var temp = {{request.GET.to_floor}};
-            currentFloorValue = parseInt(temp,10) || 0;
-    
-            // Update the hidden input with the new current_floor value
-            currentFloorInput.value = currentFloorValue;
-
-            
-            console.log(currentFloorInput.value);
-    
-            // Submit the form
-            this.form.submit();
-        });
+                
+                console.log(currentFloorInput.value);
+        
+                // Submit the form
+                this.form.submit();
+            });
+        }
         
 
 
@@ -127,8 +172,9 @@
             return path;
         }
         let graph={};
-        let currentFloorId = {{currentFloor.id}}
-        if (currentFloorId == 5 || currentFloorId == 6) {
+        let currentFloorNo = {{currentFloor.floor_no}}
+        let currentBuilding = "{{currentFloor.building}}"
+        if ((currentFloorNo == 4 && currentBuilding == "C") || (currentFloorNo == 5 && currentBuilding == "C")) {
             graph = {
                 proom1: ['pc1'],
                 proom2: ['pc2'],
@@ -167,7 +213,7 @@
                 // ... add more rooms and their neighbors ...
             };
         }
-        else if (currentFloorId == 3 || currentFloorId == 4) {
+        else if ((currentFloorNo == 2 && currentBuilding == "C") || (currentFloorNo == 3 && currentBuilding == "C")) {
             graph = {
                 proom1: ['pc1'],
                 proom2: ['pc2'],
@@ -205,7 +251,7 @@
                 // ... add more rooms and their neighbors ...
             };
         }
-        else if (currentFloorId == 2){
+        else if (currentFloorNo == 1 && currentBuilding == "C"){
             graph = {
                 proom1: ['pc1'],
                 proom2: ['pc2'],
@@ -244,7 +290,7 @@
                 // ... add more rooms and their neighbors ...
             };
         }
-        else if(currentFloorId == 1){
+        else if(currentFloorNo == 0){
             graph = {
                 proom1: ['pc6'],
                 proom2: ['pc3'],
@@ -278,7 +324,7 @@
                 pc15: ['pc015'],
                 pc015: ['pc15','pc2'],
                 pc16: ['pc1'],
-                pc17: ['pc14','pc26'],
+                pc17: ['pc14','pc26','pc18'],
                 pc18: ['pc17','pc19','proom6'],
                 pc19: ['pc21','pc18','proom7'],
                 pc20: ['pc22'],
@@ -570,6 +616,12 @@
                 var currentPlaceInput = document.getElementById('from-place');
                 var currentPlaceValue = scannedLocation.room;
                 currentPlaceInput.value = currentPlaceValue;       
+
+                if (scannedLocation.building){
+                    var currentBuildingInput = document.getElementById('fromBuilding');
+                    var fromBuildingValue = scannedLocation.building;
+                    currentPlaceInput.value = currentPlaceValue; 
+                }   
         
                 console.log(currentFloorInput.value);
                 console.log(currentPlaceInput.value);

@@ -146,13 +146,14 @@
         <form action="floor-navigate" method='get' id="qrform">
           <input type="hidden" id="current_floor" name="current_floor" value="{{ request.GET.current_floor }}">      
           <input type="hidden" id="fromBuilding" name="fromBuilding" value="{{ request.GET.fromBuilding }}">
+          <input type="hidden" id="currentBuilding" name="currentBuilding" value="{{ request.GET.currentBuilding }}">
           <input type="hidden" id="toBuilding" name="toBuilding" value="{{ request.GET.toBuilding }}">
           <input type="hidden" id="from-floor" name="from_floor" value="{{ request.GET.from_floor }}">
           <input type="hidden" id="from-place" name="from_place" value="{{ request.GET.from_place }}">
           <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
           <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
           
-          {% if request.GET.fromBuilding != request.GET.toBuilding and request.GET.to_floor != '0' %}
+          {% if request.GET.currentBuilding != request.GET.toBuilding and request.GET.to_floor != '0' %}
             <button type="button" class='btn btn-primary btn2' id="otherButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
 
             <button type="button" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor <i style="font-size: 15px;" class="bi bi-house-door"></i></button>

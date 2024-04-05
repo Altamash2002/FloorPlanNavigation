@@ -39,9 +39,10 @@ def navigate(request):
     to_floor_number = int(request.GET.get('to_floor'))
     current_floor_number = int(request.GET.get('current_floor'))
     fromBuilding = int(request.GET.get('fromBuilding'))
+    currentBuilding = int(request.GET.get('currentBuilding'))
     toBuilding = int(request.GET.get('toBuilding'))
 
-    if (fromBuilding == 2) and (fromBuilding == toBuilding):
+    if (currentBuilding == 2) and (currentBuilding == toBuilding):
         if from_floor_number < to_floor_number:
             to = 'c15'
             if current_floor_number != from_floor_number:
@@ -62,7 +63,7 @@ def navigate(request):
                     to = 'c16'
         else:
             to = to_place
-    elif (fromBuilding == 3) and (fromBuilding == toBuilding):
+    elif (currentBuilding == 3) and (currentBuilding == toBuilding):
         if from_floor_number < to_floor_number:
             to = 'c25'
             if current_floor_number != from_floor_number:
@@ -83,7 +84,7 @@ def navigate(request):
                     to = 'c26'
         else:
             to = to_place
-    elif (fromBuilding == 2) and (fromBuilding != toBuilding):
+    elif (currentBuilding == 2) and (currentBuilding != toBuilding):
         if current_floor_number != from_floor_number:
             if (current_floor_number == 0) and (to_floor_number == 0):
                 pfrom = 'c15'
@@ -101,7 +102,7 @@ def navigate(request):
                 to = 'c25'
             else:
                 to = 'c16'
-    elif (fromBuilding == 3) and (fromBuilding != toBuilding):
+    elif (currentBuilding == 3) and (currentBuilding != toBuilding):
         if current_floor_number != from_floor_number:
             if (current_floor_number == 0) and (to_floor_number == 0):
                 pfrom = 'c25'
@@ -120,7 +121,7 @@ def navigate(request):
             else:
                 to = 'c26'
 
-    current_floor = get_object_or_404(Floor,floor_no=current_floor_number, building=fromBuilding)
+    current_floor = get_object_or_404(Floor,floor_no=current_floor_number, building=currentBuilding)
     floor_map = current_floor.svg
     
     destination_floor = get_object_or_404(Floor,floor_no=to_floor_number, building=toBuilding)

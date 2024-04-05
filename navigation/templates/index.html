@@ -9,6 +9,7 @@
         <form class="bg-white shadow rounded p-5 my-5" action="floor-navigate" method='get' id="floorNavigateForm">
             <h2 class="mb-4">Search Destination </h2>
             <input type="hidden" id="current_floor" name="current_floor" value="">
+            <input type="hidden" id="currentBuilding" name="currentBuilding" value="">
 
 
 
@@ -121,10 +122,14 @@
                 // Get the selected value of the from_floor dropdown
                 var fromFloorSelect = document.getElementById('from-floor');
                 var selectedFromFloor = fromFloorSelect.options[fromFloorSelect.selectedIndex].value;
-    
+
+                var fromBuildingSelect = document.getElementById('fromBuildingSelect');
+                var selectedFromBuilding = fromBuildingSelect.options[fromBuildingSelect.selectedIndex].value;
+
                 // Update the value of the hidden input with the selected from_floor value
                 document.getElementById('current_floor').value = selectedFromFloor;
-                console.log(document.getElementById('current_floor').value)
+                document.getElementById('currentBuilding').value = selectedFromBuilding;
+                // console.log(document.getElementById('current_floor').value)
             });
         });
     </script>

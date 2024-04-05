@@ -33,25 +33,35 @@
             // Get the current_floor value from the hidden input
                 var currentFloorInput = document.getElementById('current_floor');
                 var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
-                var fromBuildingInput = document.getElementById('fromBuilding');
-                var fromBuilding = parseInt({{request.GET.fromBuilding}}, 10) || 0;
+                var currentBuildingInput = document.getElementById('currentBuilding');
+                var currentBuilding = parseInt({{request.GET.currentBuilding}}, 10) || 0;
+                var fromFloorInput = document.getElementById('from-floor');
+                var fromFloorValue = parseInt({{request.GET.from_floor}}, 10) || 0;
         
                 if (currentFloorValue == 0) {
-                    currentFloorValue++;
-                    if (fromBuilding === 2) {
-                        fromBuilding = 3;
+                    fromFloorValue = 0;
+                    if (currentBuilding === 2) {
+                        currentFloorValue = 8;
+                        currentBuilding = 3;
                     }
                     else{
-                        fromBuilding = 2;
+                        currentFloorValue++;
+                        currentBuilding = 2;
                     }
                 }
                 else{
-                    currentFloorValue--;
+                    if (currentFloorValue == 8){
+                        currentFloorValue = 0;
+                    }
+                    else{
+                        currentFloorValue--;
+                    }
                 }
         
                 // Update the hidden input with the new current_floor value
                 currentFloorInput.value = currentFloorValue;
-                fromBuildingInput.value = fromBuilding;
+                currentBuildingInput.value = currentBuilding;
+                fromFloorInput.value = fromFloorValue;
                 console.log(currentFloorInput.value);
         
                 // Submit the form
@@ -64,9 +74,20 @@
                 // Get the current_floor value from the hidden input
                 var currentFloorInput = document.getElementById('current_floor');
                 var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
+                var toBuilding = parseInt({{request.GET.toBuilding}}, 10) || 0;
         
                 // Increase the current_floor value by one
-                currentFloorValue++;
+                if (currentFloorValue == 0) {
+                    if (toBuilding == 2) {
+                        currentFloorValue++;
+                    }
+                    else{
+                        currentFloorValue = 8
+                    }
+                }
+                else{
+                    currentFloorValue++;
+                }
         
                 // Update the hidden input with the new current_floor value
                 currentFloorInput.value = currentFloorValue;
@@ -84,7 +105,12 @@
                 var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
         
                 // Increase the current_floor value by one
-                currentFloorValue--;
+                if (currentFloorValue == 8) {
+                    currentFloorValue = 0;
+                }
+                else{
+                    currentFloorValue--;
+                }
         
                 // Update the hidden input with the new current_floor value
                 currentFloorInput.value = currentFloorValue;
@@ -100,8 +126,10 @@
                 // Get the current_floor value from the hidden input
                 var currentFloorInput = document.getElementById('current_floor');
                 var currentFloorValue = parseInt({{request.GET.current_floor}}, 10) || 0;
-                var fromBuildingInput = document.getElementById('fromBuilding');
-                var fromBuilding = parseInt({{request.GET.fromBuilding}}, 10) || 0;
+                var currentBuildingInput = document.getElementById('currentBuilding');
+                var currentBuilding = parseInt({{request.GET.currentBuilding}}, 10) || 0;
+                var fromFloorInput = document.getElementById('from-floor');
+                var fromFloorValue = parseInt({{request.GET.from_floor}}, 10) || 0;
         
                 // Increase the current_floor value by one
                 var temp = {{request.GET.to_floor}};
@@ -111,10 +139,15 @@
                 // Update the hidden input with the new current_floor value
     
                 currentFloorInput.value = currentFloorValue;
+                
+                if ({{request.GET.currentBuilding}} != {{request.GET.toBuilding}}){
+                    fromFloorValue = 0;
+                    fromFloorInput.value = fromFloorValue;
+                }
                 if ({{request.GET.to_floor}} != 0){
                     var tempBuilding = {{request.GET.toBuilding}};           
-                    fromBuilding = parseInt(tempBuilding,10) || 0;
-                    fromBuildingInput.value = fromBuilding;
+                    currentBuilding = parseInt(tempBuilding,10) || 0;
+                    currentBuildingInput.value = currentBuilding;
                 }
                 
                 console.log(currentFloorInput.value);
@@ -355,7 +388,7 @@
                 pc43: ['pc42','pc41'],
             };
         }
-        else if(currentFloorNo == 1 && currentBuilding == "A"){
+        else if(currentFloorNo == 8 && currentBuilding == "A"){
             graph = {
                 proom1: ['pc1'],
                 proom2: ['pc1'],
@@ -392,14 +425,14 @@
                 pc13: ['pc5','pc6','proom12'],
                 pc14: ['pc6','pc15','proom13'],
                 pc15: ['pc14','pc17','proom14'],
-                pc16: ['pc17','pc26'],
-                pc17: ['pc15','pc16','pc20','pc25'],
+                pc16: ['pc17','pc25'],
+                pc17: ['pc15','pc16','pc20','pc26'],
                 pc20: ['pc17','pc7','proom15'],
-                pc25: ['pc17'],
-                pc26: ['pc16']
+                pc26: ['pc17'],
+                pc25: ['pc16']
             };
         }
-        else if(currentFloorNo == 2 && currentBuilding == "A"){
+        else if(currentFloorNo == 9 && currentBuilding == "A"){
             graph = {
                 proom1: ['pc1'],
                 proom2: ['pc1'],
@@ -436,13 +469,13 @@
                 pc13: ['pc5','pc6','proom12'],
                 pc14: ['pc6','pc15','proom13'],
                 pc15: ['pc14','pc17','proom14'],
-                pc16: ['pc17','pc26'],
+                pc16: ['pc17','pc25'],
                 pc17: ['pc15','pc16','pc19'],
-                pc18: ['pc19','pc25'],
+                pc18: ['pc19','pc26'],
                 pc19: ['pc17','pc20','pc18'],
                 pc20: ['pc19','pc7','proom15'],
-                pc25: ['pc18'],
-                pc26: ['pc16']
+                pc26: ['pc18'],
+                pc25: ['pc16']
             };
         }
         else{
@@ -710,9 +743,9 @@
                 currentPlaceInput.value = currentPlaceValue;       
 
                 if (scannedLocation.building){
-                    var currentBuildingInput = document.getElementById('fromBuilding');
-                    var fromBuildingValue = scannedLocation.building;
-                    currentPlaceInput.value = currentPlaceValue; 
+                    var currentBuildingInput = document.getElementById('currentBuilding');
+                    var currentBuildingValue = scannedLocation.building;
+                    currentBuildingInput.value = currentBuildingValue; 
                 }   
         
                 console.log(currentFloorInput.value);

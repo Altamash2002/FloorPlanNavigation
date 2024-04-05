@@ -32,7 +32,7 @@ class Place(models.Model):
     floor_name = models.ForeignKey(Floor, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name + f"({self.floor_name})"
     
 class Teacher(models.Model):
     name = models.CharField(max_length=255)

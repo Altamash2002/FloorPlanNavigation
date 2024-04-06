@@ -21,7 +21,7 @@
                     <h2 class="mb-4">Details</h2>
                 
                     <div class="mb-3">
-                        <h6 class="mb-3">Department :</h6>
+                        <h5 class="mb-3">Department :</h5>
                         <select class='form-select iselect2' name="department" id="departmentSelect">
                             <option value="" selected disabled>Select Department</option>
                             {% for department in departments %}
@@ -31,7 +31,7 @@
                     </div>
                 
                     <div class="mb-3">
-                        <h6 class="mb-3">Teacher to Meet :</h6>
+                        <h5 class="mb-3">Teacher to Meet :</h5>
                         <select class='form-select iselect2' name="teacher" id="teacherSelect" required>
                             {% for teacher in teachers %}
                                 <option value="{{ teacher.id }}" data-department="{{ teacher.department.id }}">{{ teacher }}</option>
@@ -51,30 +51,49 @@
                     <input type="hidden" id="currentBuilding" name="currentBuilding" value="">
 
                     
-                    <div class="form-group">
-                        <h6 class="mb-3">From:</h6>
-                        <select class='form-select iselect2 my-3' name="fromBuilding" id="fromBuildingSelect" required>
-                            {% for building in buildings %}
-                                <option value="{{ building.id }}">{{ building.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
-                            <option value="" selected disabled>Select Floor</option>
-                            {% for floor in floors %}
-                            <option value="{{floor.floor_no}}">{{floor}}</option>
-                            {% endfor %}
-                        </select>
-                        <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
-                            <option value="" selected disabled>Select place</option>
-                            {% for place in places %}
-                            <option value="{{place.title}}">{{place}}</option>
-                            {% endfor %}
-                        </select>
+                    <select class='form-select iselect2 my-3' id="gateOption">
+                        <option value="" selected>Select Gate (Optional)</option>
+                        <option value="c16">C-Building Gate</option>
+                        <option value="c26">A-Building Gate</option>
+                    </select>
+                    <hr>
+                    <div class="row justify-content-center align-items-start">
+                        <div class="col-md-4 text-center mx-5">
+                            <h5 class="mb-3">Scan QR Code:</h5>
+                            <div class="btn btn-primary d-flex justify-content-center align-items-center my-3 px-0 px-md-5" id="qrbtn">
+                                <h1 class="m-0"><i class="bi bi-camera-fill me-2"></i></h1>
+                                <p class="m-0 fs-4">Scan QR Code</p>
+                            </div>
+                            <p style="color: red;">(Scan QR Code to Automatically get the Current Location)</p>
+                        </div>
+                        <div class="col-md-6 form-group mx-5">
+                            <h5 class="mb-3">Current Location:</h5>
+                            <select class='form-select iselect2 my-3' name="fromBuilding" id="fromBuildingSelect" required>
+                                <option value="" selected disabled>Select Building</option>
+                                {% for building in buildings %}
+                                    <option value="{{ building.id }}">{{ building }}</option>
+                                {% endfor %}
+                            </select>
+                            <select class='form-select iselect2 my-3' id="from-floor" name="from_floor" required>
+                                <option value="" selected disabled>Select Floor</option>
+                                {% for floor in floors %}
+                                <option value="{{floor.floor_no}}">{{floor}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class='form-select iselect2 my-3' id="from-place" name="from_place" required>
+                                <option value="" selected disabled>Select place</option>
+                                {% for place in places %}
+                                <option value="{{place.title}}">{{place}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
+                    <hr>
         
                     <div class="form-group">
-                        <h6 class="mb-3">To:</h6>
+                        <h5 class="mb-3">To:</h5>
                         <select class='form-select iselect2 my-3' name="toBuilding" id="toBuildingSelect" required>
+                            <option value="" selected disabled>Select Building</option>
                             {% for building in buildings %}
                                 <option value="{{ building.id }}">{{ building.name }}</option>
                             {% endfor %}
@@ -202,6 +221,134 @@
             document.getElementById('currentBuilding').value = selectedFromBuilding;
             console.log(document.getElementById('current_floor').value)
         });
+
+        // updating from onselecting gate options
+        document.getElementById('gateOption').addEventListener('change', function() {
+            const selectedGate = document.getElementById('gateOption').value;
+            const fromBuildingSelect = document.getElementById('fromBuildingSelect');
+            const fromFloorSelect = document.getElementById('from-floor');
+            const fromPlaceSelect = document.getElementById('from-place');
+            
+
+            if (selectedGate === 'c16') {
+                // Update options for C-Building Gate
+                fromBuildingSelect.innerHTML = '<option value="2">C Building</option>';                    
+                fromFloorSelect.innerHTML = '<option value="0">Ground Floor</option>';                    
+                fromPlaceSelect.innerHTML = '<option value="c16">C - Gate</option>';
+
+            } else if (selectedGate === 'c26') {
+                // Update options for A-Building Gate
+                fromBuildingSelect.innerHTML = '<option value="3">A Building</option>';                    
+                fromFloorSelect.innerHTML = '<option value="0">Ground Floor</option>';                    
+                fromPlaceSelect.innerHTML = '<option value="c26">A - Gate</option>';
+            }
+            else{
+                location.reload();
+            }           
+        });
+
+        // logic for QR code 
+        document.getElementById("qrbtn").addEventListener("click", function() {
+            startCamera();
+        });
+
+        let scanner;
+        let video;
+        let closeButton;
+        let container;
+    
+        function startCamera() {
+            //disabling qr button 
+            document.getElementById('qrbtn').classList.add('disabled');
+            // Create a container for video and close button
+            container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.bottom = '0';
+            container.style.left = '0';
+            container.style.right = '0'; // Set right to 0 to ensure the div spans the entire width
+            container.style.width = 'fit-content';
+            container.style.margin = '0 auto'; // Horizontally center the div
+
+            // Access the camera and start scanning
+            const video = document.createElement('video');
+            video.style.width = '100%';
+            video.style.height = '50vh';
+            container.appendChild(video);
+
+            // Create and position close button
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✖'; // Cross symbol
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '10px'; // Adjust top position as needed
+            closeButton.style.right = '10px'; // Adjust right position as needed
+            container.appendChild(closeButton);
+
+            // Append container to the body
+            document.body.appendChild(container);
+
+            // Event listener for close button
+            closeButton.addEventListener('click', closeCamera);
+
+            scanner = new Instascan.Scanner({ video: video });
+            scanner.addListener('scan', function(content) {
+                console.log(typeof content)
+                // This function is called when a QR code is 
+                // logic of new QR is here
+                const scannedLocation = JSON.parse(content);
+                console.log(scannedLocation);
+
+                //highlightLocation(scannedLocation.room,0.8,1,'red'); // You can use the scanned content here
+                
+                
+                var fromFloorInput = document.getElementById('from-floor');
+                var fromFloorValue = scannedLocation.floor;
+                fromFloorInput.innerHTML = `<option value="${fromFloorValue}">${fromFloorValue}</option>`;   
+
+                var fromPlaceInput = document.getElementById('from-place');
+                var fromPlaceValue = scannedLocation.room;
+                fromPlaceInput.innerHTML = `<option value="${fromPlaceValue}">${fromPlaceValue}</option>`;   
+
+                var fromBuildingInput = document.getElementById('fromBuildingSelect');
+                var fromBuildingValue = scannedLocation.building;
+                fromBuildingInput.innerHTML = `<option value="${fromBuildingValue}">${fromBuildingValue}</option>`;
+        
+                console.log(fromFloorInput.value);
+                console.log(fromPlaceInput.value);
+                console.log(fromBuildingInput.value);
+
+                scanner.stop();
+
+                // Hide the video element
+                video.style.display = 'none';
+                document.getElementById('qrbtn').classList.remove('disabled');
+
+            });
+
+            Instascan.Camera.getCameras().then(function (cameras) {
+                if (cameras.length == 1) {
+                    scanner.start(cameras[0]);
+                } else if (cameras.length > 1){
+                    scanner.start(cameras[1]);
+                    video.style.transform = 'scaleX(1)';
+                }else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function (e) {
+                console.error(e);
+            });
+        }
+
+        function closeCamera() {
+            document.getElementById('qrbtn').classList.remove('disabled');
+            if (scanner) {
+                scanner.stop();
+            }
+            if(container){
+                document.body.removeChild(container);
+            }
+        }
+
+
     });
 </script>
 

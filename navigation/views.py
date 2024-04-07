@@ -126,7 +126,7 @@ def navigate(request):
     
     destination_floor = get_object_or_404(Floor,floor_no=to_floor_number, building=toBuilding)
 
-    return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map, "currentFloor": current_floor, "destinationFloor": destination_floor, "fromBuilding": fromBuilding, "toBuilding": toBuilding})
+    return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map, "currentFloor": current_floor, "destinationFloor": destination_floor, "fromBuilding": fromBuilding, "toBuilding": toBuilding, "current_floor_number":current_floor_number, "to_floor_number":to_floor_number})
 
 def register(request):
     if request.session.has_key('login'):

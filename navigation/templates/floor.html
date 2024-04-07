@@ -154,18 +154,18 @@
           <input type="hidden" id="to-floor" name="to_floor" value="{{ request.GET.to_floor }}">
           <input type="hidden" id="to-place" name="to_place" value="{{ request.GET.to_place }}">
           
-          {% if request.GET.currentBuilding != request.GET.toBuilding and request.GET.to_floor != '0' %}
-            <button type="button" class='btn btn-primary btn2' id="otherButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
+          {% if request.GET.currentBuilding != request.GET.toBuilding and to_floor_number != 0 %}
+            <button type="button" class='btn btn-primary btn2' id="otherButton">other Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
 
             <button type="button" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor <i style="font-size: 15px;" class="bi bi-house-door"></i></button>
 
-          {% elif request.GET.current_floor != request.GET.to_floor and request.GET.current_floor < request.GET.to_floor %}
+          {% elif current_floor_number != to_floor_number and current_floor_number < to_floor_number %}
             <button type="button" class='btn btn-primary btn2' id="nextButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
 
             <button type="button" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor <i style="font-size: 15px;" class="bi bi-house-door"></i></button>
 
-          {% elif request.GET.current_floor != request.GET.to_floor and request.GET.current_floor > request.GET.to_floor %}
-            <button type="button" class='btn btn-primary btn2' id="preButton">Next Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
+          {% elif current_floor_number != to_floor_number and current_floor_number > to_floor_number %}
+            <button type="button" class='btn btn-primary btn2' id="preButton">pre Floor <i style="font-size: 15px;" class="bi bi-fast-forward"></i></button>
 
             <button type="button" class='btn btn-success btn2' id="lastButton">Skip To Destination Floor <i style="font-size: 15px;" class="bi bi-house-door"></i></button>
           {% endif %}

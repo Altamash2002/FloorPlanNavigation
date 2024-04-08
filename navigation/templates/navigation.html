@@ -524,6 +524,78 @@
                 pc26: ['pc18']
             };
         }
+        else if(currentFloorNo == 11 && currentBuilding == "A"){
+            graph = {
+                proom1: ['pc1'],
+                proom2: ['pc1'],
+                proom3: ['pc4'],
+                proom4: ['pc6'],
+                proom5: ['pc8'],
+                proom6: ['pc11'],
+                proom7: ['pc13'],
+                proom8: ['pc15'],
+                proom9: ['pc16'],
+                proom10: ['pc15'],
+                proom11: ['pc14'],
+                proom12: ['pc12'],
+                proom13: ['pc11'],
+                proom14: ['pc7'],
+                proom15: ['pc4'],
+                proom16: ['pc3'],
+                proom17: ['pc10'],
+                proom18: ['pc9'],
+                proom19: ['pc5'],
+                pc1: ['proom1','proom2','pc2'],
+                pc2: ['pc1','pc3','pc4'],
+                pc3: ['pc2','proom16'],
+                pc4: ['pc2','proom3','proom15','pc5'],
+                pc5: ['pc4','proom19','pc6'],
+                pc6: ['pc5','proom4','pc7'],
+                pc7: ['proom14','pc6','pc8'],
+                pc8: ['pc7','pc9','proom5'],
+                pc9: ['pc8','pc17','proom18'],
+                pc10: ['pc17','proom17','pc11'],
+                pc11: ['proom6','proom13','pc10','pc12'],
+                pc12: ['proom12','pc11','pc13'],
+                pc13: ['proom7','pc14','pc12'],
+                pc14: ['pc13','proom11','pc15'],
+                pc15: ['proom8','proom10','pc16'],
+                pc16: ['pc15','proom9'],
+                pc17: ['pc9','pc19','pc10'],
+                pc18: ['pc19','pc26'],
+                pc19: ['pc17','pc25','pc18'],
+                pc25: ['pc19'],
+                pc26: ['pc18']
+            };
+        }
+        else if(currentFloorNo == 12 && currentBuilding == "A"){
+            graph = {
+                proom1: ['pc1','pc10'],
+                proom2: ['pc1'],
+                proom3: ['pc2'],
+                proom4: ['pc4'],
+                proom5: ['pc5'],
+                proom6: ['pc6'],
+                proom7: ['pc8'],
+                proom8: ['pc9'],
+                proom9: ['pc10'],
+                proom10: ['pc7'],
+                pc1: ['proom1','pc2','proom2'],
+                pc2: ['proom3','pc1','pc3'],
+                pc3: ['pc2','pc4','pc12'],
+                pc4: ['proom4','pc3','pc5'],
+                pc5: ['proom5','pc4','pc6'],
+                pc6: ['proom6','pc5','pc7'],
+                pc7: ['proom10','pc6','pc8'],
+                pc8: ['proom7','pc7','pc9'],
+                pc9: ['proom8','pc8'],
+                pc10: ['proom1','proom9'],
+                pc11: ['pc12','pc26'],
+                pc12: ['pc3','pc25','pc11'],
+                pc25: ['pc12'],
+                pc26: ['pc11']
+            };
+        }
         else{
             graph = {
                 proom1: ['pc1'],

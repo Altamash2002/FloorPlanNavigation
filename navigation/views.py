@@ -126,8 +126,7 @@ def navigate(request):
     
     destination_floor = get_object_or_404(Floor,floor_no=to_floor_number, building=toBuilding)
     des_place = request.GET.get('to_place')
-    des_floor = get_object_or_404(Floor,floor_no=to_floor_number)   
-    des = get_object_or_404(Place,title=des_place,floor_name=des_floor).name
+    des = get_object_or_404(Place,title=des_place,floor_name=destination_floor).name
     
     return render(request , "navigation.html" , {"i": pfrom , "j": to, "floor_map": floor_map, "currentFloor": current_floor, "destinationFloor": destination_floor, "fromBuilding": fromBuilding, "toBuilding": toBuilding, "current_floor_number":current_floor_number, "to_floor_number":to_floor_number,"des":des})
 

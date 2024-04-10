@@ -977,70 +977,8 @@
 
         }
 
-        // Function to update the shortest path based on the scanned location
-        // function updateShortestPath(locationId) {
-        //     // Ensure that the location exists in the graph
-        //     if (!(locationId in graph)) {
-        //         console.error('Invalid location ID:', locationId);
-        //     }
-
-        //     const previousPath = document.getElementById('path');
-        //     if (previousPath) {
-        //         previousPath.remove();
-        //     }
-
-        //     // Update the startRoom to the scanned location
-        //     const startRoom = locationId;
-
-        //     // Recalculate the shortest path from the scanned location to the endRoom
-        //     const updatedShortestPath = findShortestPath(graph, startRoom, endRoom);            
-        //     highlightLocationDes(endRoom,0.8,1,'green');
-        //     if(startRoom == endRoom){           
-        //         showAlert("Congrats! ", " You have reached the destination.",100000);
-        //     }
-        //     console.log(updatedShortestPath); // updated shortest path array
-
-        //     // Update the linesToDraw array based on the new path
-        //     const updatedLinesToDraw = [];
-        //     for (let i = 0; i < updatedShortestPath.length - 1; i++) {
-        //         const currentRoom = document.getElementById(updatedShortestPath[i]);
-        //         const nextRoom = document.getElementById(updatedShortestPath[i + 1]);
-
-        //         updatedLinesToDraw.push({
-        //             x1: parseFloat(currentRoom.getAttribute('cx')),
-        //             y1: parseFloat(currentRoom.getAttribute('cy')),
-        //             x2: parseFloat(nextRoom.getAttribute('cx')),
-        //             y2: parseFloat(nextRoom.getAttribute('cy')),
-        //         });
-        //     }
-        //     console.log(updatedLinesToDraw); // updated points of the path
-
-        //     // Update the path data and animate the path
-        //     const updatedPathData = updatedLinesToDraw.reduce((acc, line, index) => {
-        //         const command = index === 0 ? 'M' : 'L';
-        //         return `${acc} ${command} ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`;
-        //     }, '');
-
-                    
-        //     // Create and append the path element
-        //     const pathElement = createPathElement(updatedPathData);
-            
-        //     pathElement.style.strokeDasharray = 2;
-        //     pathElement.style.strokeDashoffset = 2;
-
-        //     console.log(pathElement)
-
-        //     // Now you can use the pathElement variable for animations or other manipulations
-        //     anime({
-        //         targets: pathElement,
-        //         strokeDashoffset: [anime.setDashoffset, 0],
-        //         easing: 'linear',
-        //         duration: 12000,
-        //         loop: true
-        //     });
-        // }
         //handle zooming SVG
-        let isZoomedIn = 260;
+        let isZoomedIn = 500;
         document.getElementById('zoom-in-btn').addEventListener('click', function(event) {
             const svg = document.getElementById('svg-image');
             let width = parseFloat(svg.getAttribute('width'))
